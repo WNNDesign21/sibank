@@ -158,7 +158,7 @@
                 <input type="date" class="form-control mr-2">
                 <label class="mr-2">Tanggal Akhir:</label>
                 <input type="date" class="form-control mr-2">
-                <a href="ocr.html" class="btn btn-primary mr-2">Tambah</a>
+                <a href="api_ocr.html" class="btn btn-primary mr-2">Tambah</a>
                 <label class="mr-2">Kantor:</label>
                 <select class="form-control mr-2">
                     <option>Kantor Cikampek</option>

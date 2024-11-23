@@ -29,7 +29,7 @@
             <a href="add_loan.php">Add New Customer</a>
         </h2>
         <h2>
-            <a href="ocr.html">OCR</a>
+            <a href="api_ocr.html">OCR</a>
         </h2>
         <div class="table-responsive">
             <table>
