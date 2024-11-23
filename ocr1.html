@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR KTP dengan Preprocessing</title>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.0.2/dist/tesseract.min.js"></script>
+    <style>
+        #progressWrapper {
+            width: 100%;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
+            margin: 20px 0;
+        }
+        #progressBar {
+            width: 0%;
+            height: 25px;
+            background-color: #4caf50;
+            text-align: center;
+            line-height: 25px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload KTP untuk OCR (Dengan Preprocessing)</h1>
+    <input type="file" id="ktpImage" accept="image/*" /><br><br>
+    <button onclick="processOCR()">Proses OCR</button>
+
+    <div id="progressWrapper">
+        <div id="progressBar">0%</div>
+    </div>
+
+    <h2>Hasil OCR:</h2>
+    <pre id="ocrResult">Hasil akan muncul di sini...</pre>
+
+    <script>
+        function updateProgressBar(progress) {
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = progress + '%';
+            progressBar.textContent = progress + '%';
+        }
+
+        // Fungsi preprocessing gambar untuk mengubah menjadi grayscale dan meningkatkan kontras
+        function preprocessImage(file, callback) {
+            const img = new Image();
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                img.src = e.target.result;
+
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const width = img.width;
+                    const height = img.height;
+
+                    // Set ukuran canvas sesuai dengan gambar
+                    canvas.width = width;
+                    canvas.height = height;
+
+                    // Gambar ke canvas
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    // Konversi ke grayscale
+                    const imageData = ctx.getImageData(0, 0, width, height);
+                    const data = imageData.data;
+
+                    for (let i = 0; i < data.length; i += 4) {
+                        const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                        data[i] = avg;       // Red
+                        data[i + 1] = avg;   // Green
+                        data[i + 2] = avg;   // Blue
+                    }
+
+                    // Set hasil grayscale kembali ke canvas
+                    ctx.putImageData(imageData, 0, 0);
+
+                    // Tingkatkan kontras
+                    const contrast = 128; // Coba atur untuk meningkatkan kontras
+                    for (let i = 0; i < data.length; i += 4) {
+                        data[i] = ((data[i] - 128) * contrast + 128); // Red
+                        data[i + 1] = ((data[i + 1] - 128) * contrast + 128); // Green
+                        data[i + 2] = ((data[i + 2] - 128) * contrast + 128); // Blue
+                    }
+
+                    // Set hasil dengan kontras yang ditingkatkan ke canvas
+                    ctx.putImageData(imageData, 0, 0);
+
+                    // Dapatkan hasil gambar yang sudah diproses
+                    const processedImage = canvas.toDataURL('image/jpeg', 0.7); // Kompres ke JPEG 70%
+                    callback(processedImage);
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function processOCR() {
+            const fileInput = document.getElementById('ktpImage').files[0];
+            if (!fileInput) {
+                alert("Harap unggah gambar KTP terlebih dahulu.");
+                return;
+            }
+
+            // Tampilkan pesan loading
+            document.getElementById('ocrResult').textContent = "Sedang memproses gambar...";
+            updateProgressBar(0); // Reset progress bar
+
+            // Preprocess gambar sebelum memproses OCR
+            preprocessImage(fileInput, function(processedImage) {
+                Tesseract.recognize(
+                    processedImage,
+                    'ind', // Menggunakan bahasa Indonesia
+                    {
+                        logger: info => {
+                            console.log(info);
+                            if (info.status === 'recognizing text') {
+                                const progress = Math.round(info.progress * 100);
+                                updateProgressBar(progress);
+                            }
+                        }
+                    }
+                ).then(({ data: { text } }) => {
+                    // Hapus karakter yang tidak valid
+                    const finalText = cleanUpText(text);
+
+                    // Tampilkan hasil OCR
+                    document.getElementById('ocrResult').textContent = finalText;
+                    updateProgressBar(100); // Selesaikan progress bar
+                }).catch(err => {
+                    console.error(err);
+                    document.getElementById('ocrResult').textContent = "Terjadi kesalahan saat memproses gambar.";
+                });
+            });
+        }
+
+        function cleanUpText(text) {
+            // Menghapus karakter yang tidak valid dan simbol di akhir
+            return text.replace(/[^\d\w\s]+$/, '').trim(); // Menghapus simbol di akhir dan spasi tambahan
+        }
+    </script>
+</body>
+</html>

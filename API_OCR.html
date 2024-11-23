@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OCR.space API Demo with Custom Settings</title>
+  </head>
+  <body>
+    <h2>OCR KTP Reader dengan Pengaturan Khusus OCR.space API</h2>
+
+    <!-- Input Gambar -->
+    <input type="file" id="ktpImage" accept="image/*" />
+    <button onclick="processOCR()">Proses OCR</button>
+
+    <!-- Hasil OCR -->
+    <h3>Hasil OCR:</h3>
+    <pre id="ocrResult"></pre>
+
+    <!-- Form untuk Pengisian Otomatis -->
+    <h3>Form Data KTP:</h3>
+    <form id="ktpForm">
+      <label for="name">Nama:</label>
+      <input type="text" id="name" name="name" /><br /><br />
+
+      <label for="nik">NIK:</label>
+      <input type="text" id="nik" name="nik" /><br /><br />
+
+      <label for="birthPlaceDate">Tempat, Tanggal Lahir:</label>
+      <input
+        type="text"
+        id="birthPlaceDate"
+        name="birthPlaceDate" /><br /><br />
+
+      <label for="gender">Jenis Kelamin:</label>
+      <input type="text" id="gender" name="gender" /><br /><br />
+
+      <label for="address">Alamat:</label>
+      <textarea id="address" name="address"></textarea><br /><br />
+
+      <label for="desa">Desa/Kelurahan:</label>
+      <input type="text" id="desa" name="desa" /><br /><br />
+
+      <label for="kecamatan">Kecamatan:</label>
+      <input type="text" id="kecamatan" name="kecamatan" /><br /><br />
+
+      <label for="kabupatenKota">Kabupaten/Kota:</label>
+      <input type="text" id="kabupatenKota" name="kabupatenKota" /><br /><br />
+
+      <label for="religion">Agama:</label>
+      <input type="text" id="religion" name="religion" /><br /><br />
+
+      <label for="maritalStatus">Status Perkawinan:</label>
+      <input type="text" id="maritalStatus" name="maritalStatus" /><br /><br />
+
+      <label for="job">Pekerjaan:</label>
+      <input type="text" id="job" name="job" /><br /><br />
+
+      <label for="citizenship">Kewarganegaraan:</label>
+      <input type="text" id="citizenship" name="citizenship" /><br /><br />
+
+      <button type="submit">Simpan Data</button>
+    </form>
+
+    <script>
+      function processOCR() {
+        const fileInput = document.getElementById("ktpImage").files[0];
+        const apiKey = "K81624968088957"; // Ganti dengan API Key Anda
+
+        if (!fileInput) {
+          alert("Pilih gambar KTP terlebih dahulu!");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("apikey", apiKey);
+        formData.append("language", "eng"); // Menggunakan Bahasa Indonesia
+        formData.append("file", fileInput);
+        formData.append("isTable", true); // Mengaktifkan mode table recognition
+        formData.append("scale", true); // Auto-enlarge content
+        formData.append("OCREngine", 2); // Menggunakan OCR Engine 2
+
+        fetch("https://api.ocr.space/parse/image", {
+          method: "POST",
+          body: formData
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.OCRExitCode === 1) {
+              const parsedText = data.ParsedResults[0].ParsedText;
+              document.getElementById("ocrResult").textContent = parsedText;
+
+              // Memproses hasil OCR untuk diisi di form
+              autofillForm(parsedText);
+            } else {
+              document.getElementById("ocrResult").textContent =
+                "Error: " + data.ErrorMessage;
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            document.getElementById("ocrResult").textContent =
+              "Terjadi kesalahan saat melakukan OCR.";
+          });
+      }
+
+      function autofillForm(parsedText) {
+        // Regex untuk mencari data berdasarkan label yang umum di KTP
+        const nameMatch = parsedText.match(/Nama\s*:\s*(.*)/i);
+        const nikMatch = parsedText.match(/NIK\s*:\s*(\d+)/i);
+        const birthPlaceDateMatch = parsedText.match(
+          /Tempat\/Tgl Lahir\s*:\s*([A-Za-z\s]+),\s*(\d{2}-\d{2}-\d{4})/i
+        );
+
+        const genderMatch = parsedText.match(
+          /Jenis Kelamin\s*:\s*(Laki-Laki|Perempuan)/i
+        );
+        const addressMatch = parsedText.match(/Alamat\s*:\s*(.*)/i);
+
+        // Variasi Regex untuk mencari Kel/Desa, Kecamatan, dan Kabupaten/Kota
+        const desaMatch = parsedText.match(/Kel\/Desa\s*:\s*(.*)/i);
+        const kecamatanMatch = parsedText.match(/Kecamatan\s*:\s*(.*)/i);
+        const kabupatenKotaMatch = parsedText.match(
+          /kabupaten\s+([a-zA-Z\s]+)\s+NIK/i
+        );
+
+        const religionMatch = parsedText.match(/Agama\s*:\s*(.*)/i);
+        const maritalStatusMatch = parsedText.match(
+          /Status Perkawinan\s*:\s*([^\s]+)/i
+        );
+        const jobMatch = parsedText.match(/Pekerjaan\s*:\s*([^\s]+)/i);
+        const citizenshipMatch = parsedText.match(
+          /Kewarganegaraan\s*:\s*(.*)/i
+        );
+
+        // Isi form dengan data yang ditemukan
+        if (nameMatch)
+          document.getElementById("name").value = nameMatch[1].trim();
+        if (nikMatch) document.getElementById("nik").value = nikMatch[1].trim();
+
+        if (birthPlaceDateMatch) {
+          const birthPlace = birthPlaceDateMatch[1].trim();
+          const birthDate = birthPlaceDateMatch[2].trim();
+          document.getElementById(
+            "birthPlaceDate"
+          ).value = `${birthPlace}, ${birthDate}`;
+        }
+
+        if (genderMatch)
+          document.getElementById("gender").value = genderMatch[1].trim();
+        if (addressMatch)
+          document.getElementById("address").value = addressMatch[1].trim();
+        if (desaMatch)
+          document.getElementById("desa").value = desaMatch[1].trim();
+        if (kecamatanMatch)
+          document.getElementById("kecamatan").value = kecamatanMatch[1].trim();
+        if (kabupatenKotaMatch)
+          document.getElementById("kabupatenKota").value =
+            kabupatenKotaMatch[1].trim();
+        if (religionMatch)
+          document.getElementById("religion").value = religionMatch[1].trim();
+        if (maritalStatusMatch)
+          document.getElementById("maritalStatus").value =
+            maritalStatusMatch[1].trim();
+        if (jobMatch) document.getElementById("job").value = jobMatch[1].trim();
+        if (citizenshipMatch)
+          document.getElementById("citizenship").value =
+            citizenshipMatch[1].trim();
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR KTP dengan Preprocessing</title>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.0.2/dist/tesseract.min.js"></script>
+    <style>
+        #progressWrapper {
+            width: 100%;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
+            margin: 20px 0;
+        }
+        #progressBar {
+            width: 0%;
+            height: 25px;
+            background-color: #4caf50;
+            text-align: center;
+            line-height: 25px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload KTP untuk OCR (Dengan Preprocessing)</h1>
+    <input type="file" id="ktpImage" accept="image/*" /><br><br>
+    <button onclick="processOCR()">Proses OCR</button>
+
+    <div id="progressWrapper">
+        <div id="progressBar">0%</div>
+    </div>
+
+    <h2>Hasil OCR:</h2>
+    <pre id="ocrResult">Hasil akan muncul di sini...</pre>
+
+    <h2>Form Data KTP:</h2>
+    <form id="ktpForm">
+        <label for="nik">NIK:</label>
+        <input type="text" id="nik" name="nik"><br><br>
+        <label for="name">Nama:</label>
+        <input type="text" id="name" name="name"><br><br>
+        <label for="birthPlace">Tempat Lahir:</label>
+        <input type="text" id="birthPlace" name="birthPlace"><br><br>
+        <label for="birthDate">Tanggal Lahir:</label>
+        <input type="text" id="birthDate" name="birthDate"><br><br>
+        <label for="address">Alamat:</label>
+        <input type="text" id="address" name="address"><br><br>
+        <label for="rtRw">RT/RW:</label>
+        <input type="text" id="rtRw" name="rtRw"><br><br>
+        <label for="village">Desa:</label>
+        <input type="text" id="village" name="village"><br><br>
+        <label for="district">Kecamatan:</label>
+        <input type="text" id="district" name="district"><br><br>
+    </form>
+
+    <script>
+        function updateProgressBar(progress) {
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = progress + '%';
+            progressBar.textContent = progress + '%';
+        }
+
+        // Fungsi preprocessing gambar untuk mengubah menjadi grayscale dan meningkatkan kontras
+        function preprocessImage(file, callback) {
+            const img = new Image();
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                img.src = e.target.result;
+
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const width = img.width;
+                    const height = img.height;
+
+                    // Meningkatkan ukuran gambar
+                    canvas.width = width * 2; // Menaikkan resolusi
+                    canvas.height = height * 2;
+                    ctx.scale(2, 2); // Menaikkan resolusi dengan skala
+
+                    // Gambar ke canvas
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    // Konversi ke grayscale
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const data = imageData.data;
+
+                    for (let i = 0; i < data.length; i += 4) {
+                        const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                        data[i] = avg;       // Red
+                        data[i + 1] = avg;   // Green
+                        data[i + 2] = avg;   // Blue
+                    }
+
+                    // Set hasil grayscale kembali ke canvas
+                    ctx.putImageData(imageData, 0, 0);
+
+                    // Tingkatkan kontras
+                    for (let i = 0; i < data.length; i += 4) {
+                        data[i] = (data[i] < 128) ? 0 : 255;       // Red
+                        data[i + 1] = (data[i + 1] < 128) ? 0 : 255; // Green
+                        data[i + 2] = (data[i + 2] < 128) ? 0 : 255; // Blue
+                    }
+
+                    // Set hasil dengan kontras yang ditingkatkan ke canvas
+                    ctx.putImageData(imageData, 0, 0);
+
+                    // Dapatkan hasil gambar yang sudah diproses
+                    const processedImage = canvas.toDataURL('image/jpeg', 0.7); // Kompres ke JPEG 70%
+                    callback(processedImage);
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function processOCR() {
+            const fileInput = document.getElementById('ktpImage').files[0];
+            if (!fileInput) {
+                alert("Harap unggah gambar KTP terlebih dahulu.");
+                return;
+            }
+
+            // Tampilkan pesan loading
+            document.getElementById('ocrResult').textContent = "Sedang memproses gambar...";
+            updateProgressBar(0); // Reset progress bar
+
+            // Preprocess gambar sebelum memproses OCR
+            preprocessImage(fileInput, function(processedImage) {
+                Tesseract.recognize(
+                    processedImage,
+                    'ind', // Menggunakan bahasa Indonesia
+                    {
+                        logger: info => {
+                            console.log(info);
+                            if (info.status === 'recognizing text') {
+                                const progress = Math.round(info.progress * 100);
+                                updateProgressBar(progress);
+                            }
+                        },
+                        tessedit_char_whitelist: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', // Mengizinkan hanya karakter yang valid
+                        tessedit_pageseg_mode: Tesseract.PSM.AUTO, // Mengatur mode segmentasi halaman
+                    }
+                ).then(({ data: { text } }) => {
+                    // Mencoba mengganti huruf 'L' dengan '1' dan mengatasi NIK
+                    const correctedText = correctCharacters(text);
+
+                    // Hapus karakter tidak valid, termasuk tanda tanya
+                    const finalText = correctedText.replace(/[?]/g, ''); // Menghapus tanda tanya
+
+                    // Ekstrak informasi tambahan
+                    extractInfo(finalText);
+
+                    // Tampilkan hasil OCR
+                    document.getElementById('ocrResult').textContent = finalText;
+                    updateProgressBar(100); // Selesaikan progress bar
+                }).catch(err => {
+                    console.error(err);
+                    document.getElementById('ocrResult').textContent = "Terjadi kesalahan saat memproses gambar.";
+                });
+            });
+        }
+
+        function extractInfo(text) {
+            const nikMatch = text.match(/(\d{16})/); // Asumsikan NIK adalah 16 digit
+            const nameMatch = text.match(/(?:Nama\s*:\s*)([A-Z\s]+)/i); // Memperbaiki regex Nama
+            const birthPlaceMatch = text.match(/(?:Tempat\/Tgl Lahir\s*)([^,]*)/i); // Mengambil tempat lahir
+            const birthDateMatch = text.match(/(?:Tempat\/Tgl Lahir\s*[^,]*,\s*)([^\n]*)/i); // Mengambil tanggal lahir
+            const addressMatch = text.match(/(?:Alamat\s*:\s*)([^\n]*)/i); // Asumsikan alamat
+            const rtRwMatch = text.match(/(?:RT\/RW\s*:\s*)([^\n]*)/i); // Asumsikan RT/RW
+            const villageMatch = text.match(/(?:Desa\/Kel\s*:\s*)([^\n]*)/i); // Asumsikan desa/kelurahan
+            const districtMatch = text.match(/(?:Kecamatan\s*:\s*)([^\n]*)/i); // Asumsikan kecamatan
+
+            // Mengisi field form
+            if (nikMatch) {
+                document.getElementById('nik').value = nikMatch[1]; // Set NIK
+            }
+            if (nameMatch) {
+                document.getElementById('name').value = nameMatch[1].trim(); // Set Nama
+            }
+            if (birthPlaceMatch) {
+                document.getElementById('birthPlace').value = birthPlaceMatch[1].trim(); // Set Tempat Lahir
+            }
+            if (birthDateMatch) {
+                document.getElementById('birthDate').value = birthDateMatch[1].trim(); // Set Tanggal Lahir
+            }
+            if (addressMatch) {
+                document.getElementById('address').value = addressMatch[1].trim(); // Set Alamat
+            }
+            if (rtRwMatch) {
+                document.getElementById('rtRw').value = rtRwMatch[1].trim(); // Set RT/RW
+            }
+            if (villageMatch) {
+                document.getElementById('village').value = villageMatch[1].trim(); // Set Desa
+            }
+            if (districtMatch) {
+                document.getElementById('district').value = districtMatch[1].trim(); // Set Kecamatan
+            }
+        }
+
+        function correctCharacters(text) {
+            // Menetapkan pola untuk mendeteksi NIK
+            const nikPattern = /(\d*[lL]\d*)/g; // NIK yang mungkin mengandung 'L'
+            return text.replace(nikPattern, function(match) {
+                // Jika 'L' ada dan panjang NIK adalah 16 karakter, ganti dengan '1'
+                if (match.length === 16) {
+                    return match.replace(/l/i, '1');
+                }
+                return match; // Kembalikan match jika tidak perlu diubah
+            });
+        }
+    </script>
+</body>
+</html>
