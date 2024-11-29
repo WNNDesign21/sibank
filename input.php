@@ -382,28 +382,31 @@
               "Terjadi kesalahan saat melakukan OCR.";
           });
       }
+      // s*[:;]? kode ini untuk menentukan titik dua, titik koma, dan spasi
+      // s*([^\d]*) kode ini untuk menghilangkan angka
+
 
       function autofillForm(parsedText) {
         // Regex untuk mencari data berdasarkan label yang umum di KTP
-        const nameMatch = parsedText.match(/Nama\s*:\s*(.*)/i);
-        const nikMatch = parsedText.match(/NIK\s*:\s*(\d+)/i);
+        const nameMatch = parsedText.match(/Nama\s*[:;]?\s*(.*)/i);
+        const nikMatch = parsedText.match(/NIK\s*[:;]?\s*(\d+)/i);
         const birthPlaceDateMatch = parsedText.match(
-          /Tempat\/Tgl Lahir\s*:\s*([A-Za-z\s]+),\s*(\d{2}-\d{2}-\d{4})/i
+          /Tempat\/Tgl Lahir\s*[:;]?\s*([A-Za-z\s]+),\s*(\d{2}-\d{2}-\d{4})/i
         );
 
         const genderMatch = parsedText.match(
-          /Jenis Kelamin\s*:\s*(Laki-Laki|Perempuan)/i
+          /Jenis Kelamin\s*[:;]?\s*(Laki-Laki|Perempuan)/i
         );
-        const addressMatch = parsedText.match(/Alamat\s*:\s*(.*)/i);
-        const desaMatch = parsedText.match(/Kel\/Desa\s*[:;]\s*(.*)/i);
+        const addressMatch = parsedText.match(/Alamat\s*[:;]?\s*(.*)/i);
+        const desaMatch = parsedText.match(/Kel\Desa\s*[:;]\s*(.*)/i);
         const kecamatanMatch = parsedText.match(/Kecamatan\s*[:;]\s*(.*)/i);
-        const religionMatch = parsedText.match(/Agama\s*:\s*(.*)/i);
+        const religionMatch = parsedText.match(/Agama\s*[:;]?\s*(.*)/i);
         const maritalStatusMatch = parsedText.match(
-          /Status Perkawinan\s*:\s*(Kawin|Belum Kawin)/i
+          /Status Perkawinan\s*[:;]?\s*(Kawin|Belum Kawin)/i
         );
-        const jobMatch = parsedText.match(/Pekerjaan\s*:\s*(.*)/i);
+        const jobMatch = parsedText.match(/Pekerjaan\s*[:;]?\s*([^\d]*)/i);
         const citizenshipMatch = parsedText.match(
-          /Kewarganegaraan\s*:\s*(.*)/i
+          /Kewarganegaraan\s*[:;]?\s*(.*)/i
         );
 
         // Mencari kata "Kabupaten" atau "Kota" dan mengambil teks setelahnya
@@ -494,21 +497,21 @@
   function autofillFormpsg(parsedText) {
     // Regex untuk mencari data berdasarkan label yang umum di KTP
     const nameMatch = parsedText.match(/Nama\s*[;:]?\s*(.*)/i);
-    const nikMatch = parsedText.match(/NIK\s*:\s*(\d+)/i);
+    const nikMatch = parsedText.match(/NIK\s*[:;]?\s*(\d+)/i);
     const birthPlaceDateMatch = parsedText.match(
-      /Tempat\/Tgl Lahir\s*:\s*([A-Za-z\s]+),\s*(\d{2}-\d{2}-\d{4})/i
+      /Tempat\/Tgl Lahir\s*[:;]?\s*([A-Za-z\s]+),\s*(\d{2}-\d{2}-\d{4})/i
     );
 
     const genderMatch = parsedText.match(
-      /Jenis Kelamin\s*:\s*(Laki-Laki|Perempuan)/i
+      /Jenis Kelamin\s*[:;]?\s*(Laki-Laki|Perempuan)/i
     );
-    const addressMatch = parsedText.match(/Alamat\s*:\s*(.*)/i);
-    const desaMatch = parsedText.match(/Kel\/Desa\s*[:;]?\s*(.*)/i);
-    const kecamatanMatch = parsedText.match(/Kecamatan\s*[:;]\s*(.*)/i);
-    const religionMatch = parsedText.match(/Agama\s*:\s*(.*)/i);
-    const jobMatch = parsedText.match(/Pekerjaan\s*:\s*([^\d]*)/i);
+    const addressMatch = parsedText.match(/Alamat\s*[:;]?\s*(.*)/i);
+    const desaMatch = parsedText.match(/Kel\Desa\s*[:;]?\s*(.*)/i);
+    const kecamatanMatch = parsedText.match(/Kecamatan\s*[:;]?\s*(.*)/i);
+    const religionMatch = parsedText.match(/Agama\s*[:;]?\s*(.*)/i);
+    const jobMatch = parsedText.match(/Pekerjaan\s*[:;]?\s*([^\d]*)/i);
     const citizenshipMatch = parsedText.match(
-      /Kewarganegaraan\s*:\s*(.*)/i
+      /Kewarganegaraan\s*[:;]?\s*(.*)/i
     );
 
     // Mencari kata "Kabupaten" atau "Kota" dan mengambil teks setelahnya
