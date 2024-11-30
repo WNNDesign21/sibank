@@ -1,0 +1,132 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: url("assets/background.png") no-repeat;
+  background-size: cover;
+  padding-top: 100px; /* Menyesuaikan dengan tinggi header */
+  overflow-y: auto;
+}
+
+header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 20px 20px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.header-center {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-center h3,
+.header-center p {
+  margin: 0;
+}
+
+.main-content {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  text-align: center;
+}
+
+header img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin: 10px 50px;
+}
+
+.hamburger {
+  font-size: 30px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding-left: 30px;
+  transition: transform 0.3s ease;
+}
+
+#sidebar {
+  width: 250px;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: -250px;
+  height: 100%;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: left 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-open {
+  left: 0 !important; /* Sidebar membuka */
+}
+
+.hamburger-open {
+  transform: translateX(220px);
+  /*Gesertombolhamburger*/
+  -webkit-transform: translateX(200px);
+  -moz-transform: translateX(220px);
+  -ms-transform: translateX(220px);
+  -o-transform: translateX(220px);
+  -webkit-transform: translateX(220px);
+}
+
+.profile {
+  text-align: left;
+  padding: 20px;
+}
+
+.profile img {
+  border-radius: 50%;
+}
+
+.profile h2 {
+  margin: 10px 0 5px;
+  font-size: medium;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav li {
+  padding: 15px 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logout {
+  margin: auto 20px 20px;
+  padding: 10px;
+  background-color: #800000;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

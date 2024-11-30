@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Sidebar</title>
+    <link rel="stylesheet" href="dashboard2.css" />
+  </head>
+  <body>
+    <header>
+      <button class="hamburger" onclick="toggleSidebar()">☰</button>
+      <div class="header-center">
+        <h3>WENDI NUGRAHA N</h3>
+        <p>IT Staff</p>
+      </div>
+      <img src="https://via.placeholder.com/50" alt="Profile Picture" />
+    </header>
+
+    <div class="container">
+      <h2>DASHBOARD</h2>
+    </div>
+
+    <aside id="sidebar" class="sidebar">
+      <div class="profile">
+        <img src="https://via.placeholder.com/50" alt="Profile Picture" />
+        <h2>WENDI NUGRAHA N</h2>
+        <p>IT Staff</p>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#">Dashboard</a></li>
+          <li><a href="#">Memorandum SO</a></li>
+          <li><a href="#">Memorandum AO</a></li>
+          <li><a href="#">Memorandum HM</a></li>
+          <li><a href="#">Memorandum BM</a></li>
+          <li><a href="#">Memorandum CA</a></li>
+          <li><a href="#">CAA</a></li>
+        </ul>
+      </nav>
+      <button class="logout">Logout</button>
+    </aside>
+
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        const hamburger = document.querySelector(".hamburger");
+
+        console.log("Sidebar classList:", sidebar.classList); // Log untuk debug
+        sidebar.classList.toggle("sidebar-open");
+        hamburger.classList.toggle("hamburger-open");
+      }
+    </script>
+  </body>
+</html>
