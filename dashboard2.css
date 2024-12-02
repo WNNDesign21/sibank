@@ -2,22 +2,31 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: url("assets/background.png") no-repeat;
+  background: url("background.png") no-repeat;
   background-size: cover;
-  padding-top: 100px; /* Menyesuaikan dengan tinggi header */
-  overflow-y: auto;
+  padding-top: 70px; /* Menyesuaikan dengan tinggi header */
+  overflow: hidden;
 }
 
 header {
   width: 100%;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 30px 20px 20px 20px;
+  padding: 0px 0px 0px 0px;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 10;
+  z-index: 5;
+  background-color: #800000;
+}
+header img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin: 5px 50px 10px 0px;
 }
 
 .header-center {
@@ -33,25 +42,13 @@ header {
   margin: 0;
 }
 
-.main-content {
-  width: 100%;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 .container {
   text-align: center;
-}
-
-header img {
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  margin: 5px 50px 5px 0px;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .hamburger {
@@ -74,6 +71,7 @@ header img {
   transition: left 0.3s ease;
   display: flex;
   flex-direction: column;
+  z-index: 10;
 }
 
 .sidebar-open {
@@ -81,13 +79,13 @@ header img {
 }
 
 .hamburger-open {
-  transform: translateX(220px);
+  transform: translateX(230px);
   /*Gesertombolhamburger*/
   -webkit-transform: translateX(200px);
-  -moz-transform: translateX(220px);
-  -ms-transform: translateX(220px);
-  -o-transform: translateX(220px);
-  -webkit-transform: translateX(220px);
+  -moz-transform: translateX(230px);
+  -ms-transform: translateX(230px);
+  -o-transform: translateX(230px);
+  -webkit-transform: translateX(230px);
 }
 
 .profile {
@@ -129,4 +127,42 @@ nav a {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.table-container {
+  margin: 0px 70px 0px 70px; /* Margin bawah diperbesar */
+  /* padding-bottom: 50px; Tambahkan ruang internal di bawah tabel */
+  width: 90%;
+  overflow: auto; /* Scrollable ke samping dan bawah */
+  max-height: 370px; /* Maksimum tinggi tabel */
+  border: 1px solid #ddd;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 1000px; /* Tabel lebar minimum */
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background-color: #f4f4f4;
+  position: sticky; /* Header tetap terlihat saat scroll */
+  top: 0;
+  z-index: 1;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #fff;
 }
