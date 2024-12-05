@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MSO</title>
     <link rel="stylesheet" href="dashboard2.css" />
+    <script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js
+"></script>
+    <link
+      href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css
+"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <header>
@@ -237,23 +246,6 @@
           </div>
         </div>
       </div>
-      <!-- POP UP Alert -->
-      <div id="Alert" class="Alert">
-        <div class="Alert">
-          <label>UPLOAD/label>
-          <br />
-          <input type="file" name="Up-ktp-deb" class="form-control" />
-          <br />
-          <label>UPLOAD</label>
-          <br />
-          <input type="file" name="Up-kk-deb" class="form-control" />
-          <br />
-          <!-- Tombol Uplod -->
-          <div class="tombol">
-            <button class="Alert" onclick="Alert()">Alert</button>
-          </div>
-        </div>
-      </div>
     </div>
 
     <script>
@@ -271,10 +263,29 @@
       function openUpload() {
         document.getElementById("Upload").style.display = "block";
       }
-      // Fungsi untuk membuka Alert
+      // Fungsi untuk menangani klik di luar popup
+      window.onclick = function (event) {
+        var modal = document.querySelector(".Upload");
+        var content = document.querySelector(".Upload-content");
+
+        // Jika klik terjadi di luar modal, sembunyikan modal
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+
       function Upload() {
-        alert('File berhasil di-upload!');
-        // document.getElementById("Alert").style.display = "block";
+        // // alert("test");
+        // document.getElementById("Upload").style.display = "block";
+        Swal.fire({
+          title: "Data Berhasil Disalin <br> Lanjut Input",
+          icon: "success",
+          confirmButtonText: "OK",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "input_MSO.html";
+          }
+        });
       }
     </script>
   </body>
