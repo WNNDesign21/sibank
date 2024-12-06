@@ -181,8 +181,8 @@
             />
           </div>
           <div class="col-md-4">
-            <label for="nik">Tanggal Lahir:</label>
-            <input type="text" id="tgl-lahir" name="nik" class="form-control" />
+            <label for="tgl-lahir">Tanggal Lahir:</label>
+            <input type="text" id="tgl-lahir" name="tgl-lahir" class="form-control" />
           </div>
           <div class="col-md-4">
             <label for="gender">Jenis Kelamin:</label>

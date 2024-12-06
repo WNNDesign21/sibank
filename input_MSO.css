@@ -6,7 +6,7 @@ body {
   background-size: cover;
   background-position: 0px -50px;
   padding-top: 70px; /* Menyesuaikan dengan tinggi header */
-  /* overflow: hidden; */
+  /* overflow: hidden; */  
 }
 
 header {
@@ -129,8 +129,9 @@ nav a {
 }
 
 .container {
-  text-align: center;
-  width: 97%;
+  margin-left: 50px;
+
+  width: 95%;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -146,6 +147,7 @@ nav a {
 }
 
 .section-title {
+  display: flex;
 margin-bottom: 20px;
   padding: 15px 0px 15px 25px;
   background-color: #800000; /* Warna latar belakang maroon */
@@ -210,4 +212,7 @@ textarea {
   cursor: pointer;
 }
 
-
+.ocr {
+  margin-left: 20px;
+  margin-right: 20px;
+}
