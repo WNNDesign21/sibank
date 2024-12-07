@@ -27,7 +27,7 @@ header img {
   width: 50px;
   height: 50px;
   object-fit: cover;
-  margin: 5px 50px 10px 0px;
+  margin: 5px 5px 10px 0px;
 }
 
 .header-center {
@@ -41,6 +41,7 @@ header img {
 .header-center h3,
 .header-center p {
   margin: 0;
+  margin-bottom: 5px;
 }
 
 .hamburger {
@@ -135,6 +136,7 @@ nav a {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-left: -4px;
 }
 
 /* INI CSS TABLE CAA */

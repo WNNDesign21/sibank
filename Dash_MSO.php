@@ -1,3 +1,18 @@
+<?php
+
+include('koneksi.php');
+
+session_start(); // Memulai session
+
+// Mengecek apakah pengguna sudah login
+if (!isset($_SESSION['username'])) {
+    // Jika tidak ada session username, arahkan ke halaman login
+    header("Location: login.php");
+    exit();
+}
+$nama = $_SESSION['nama'];
+$jabatan = $_SESSION['jabatan'];
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -19,8 +34,8 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css
     <header>
       <button class="hamburger" onclick="toggleSidebar()">☰</button>
       <div class="header-center">
-        <h3>WENDI NUGRAHA N</h3>
-        <p>IT Staff</p>
+        <h3><?php echo $nama; ?></h3>
+        <p><?php echo $jabatan; ?></p>
       </div>
       <img src="assets/pp.png" alt="Profile Picture" />
     </header>
@@ -28,12 +43,12 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css
     <aside id="sidebar" class="sidebar">
       <img src="assets/pp.png" alt="Profile Picture" />
       <div class="profile">
-        <h2>WENDI NUGRAHA N</h2>
-        <p>IT Staff</p>
+        <h2><?php echo $nama; ?></h2>
+        <p><?php echo $jabatan; ?></p>
       </div>
       <nav>
         <ul>
-          <li><a href="dashboard2.html">Dashboard</a></li>
+          <li><a href="dashboard.php">Dashboard</a></li>
           <li><a href="#">Memorandum SO</a></li>
           <li><a href="#">Memorandum AO</a></li>
           <li><a href="#">Memorandum HM</a></li>
@@ -227,19 +242,12 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css
       </div>
       <!-- Tombol Add New -->
       <div class="tombol">
-        <button class="add-new-btn" onclick="openUpload()">Add New</button>
+        <button class="add-new-btn" onclick="Lanjut()">Add New</button>
       </div>
       <!-- POP UP Upload -->
       <div id="Upload" class="Upload">
         <div class="Upload-content">
-          <label>UPLOAD KTP DEBITUR</label>
-          <br />
-          <input type="file" name="Up-ktp-deb" class="form-control" />
-          <br />
-          <label>UPLOAD KARTU KELUARGA DEBITUR</label>
-          <br />
-          <input type="file" name="Up-kk-deb" class="form-control" />
-          <br />
+          <label>SILAHKAN LANJUTKAN INPUT</label>
           <!-- Tombol Uplod -->
           <div class="tombol">
             <button class="upload-btn" onclick="Upload()">Upload</button>
@@ -274,11 +282,11 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css
         }
       };
 
-      function Upload() {
+      function Lanjut() {
         // // alert("test");
         // document.getElementById("Upload").style.display = "block";
         Swal.fire({
-          title: "Data Berhasil Disalin <br> Lanjut Input",
+          title: "Lanjutkan Inputan Data Debitur",
           icon: "success",
           confirmButtonText: "OK",
         }).then((result) => {

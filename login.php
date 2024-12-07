@@ -1,44 +1,53 @@
 <?php
 session_start();
+
+// Meng-include koneksi.php
+include('koneksi.php'); 
+
 $login_success = false; // Flag untuk status login berhasil
 $login_failed = false;  // Flag untuk status login gagal
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Koneksi database
-    $conn = new mysqli('localhost', 'root', '', 'sibank');
-
-    // Cek apakah koneksi berhasil
-    if ($conn->connect_error) {
-        die("Koneksi database gagal: " . $conn->connect_error);
-    }
-
+    // Mengambil username dan password yang di-submit
     $username = $conn->real_escape_string($_POST['username']);
     $password = $conn->real_escape_string($_POST['password']);
 
     // Query untuk cek username dan password
     $result = $conn->query("SELECT * FROM users WHERE username='$username' AND password='$password'");
-    
-    if ($result->num_rows > 0) {
-        $_SESSION['loggedin'] = true;
-        $login_success = true; // Set flag login berhasil
+
+    if ($result) {
+        // Periksa jika query berhasil dan ada hasil
+        if ($result->num_rows > 0) {
+            // Ambil data pengguna dari database
+            $user = $result->fetch_assoc();
+            
+            // Simpan data dalam sesi
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $user['username']; // Simpan username ke session
+            $_SESSION['nama'] = $user['nama']; // Simpan nama ke session
+            $_SESSION['jabatan'] = $user['jabatan']; // Simpan nama ke session
+            
+            $login_success = true; // Set flag login berhasil
+        } else {
+            $login_failed = true; // Set flag login gagal
+        }
     } else {
-        $login_failed = true; // Set flag login gagal
+        // Jika query gagal, tampilkan error
+        echo "Error: " . $conn->error;
     }
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initialscale=1.0" />
-    <title>Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
     <link rel="stylesheet" href="css/login.css" />
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     <script src="js/script.js" defer></script>
-</head>
-<style>
-.overlay {
+    <style>
+        .overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -48,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             display: flex;
             justify-content: center;
             align-items: center;
-            visibility: hidden; /* Hidden by default */
+            visibility: hidden;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -64,16 +73,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             border-radius: 10px;
             text-align: center;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transform: translateY(100%); /* Mulai dari bawah */
-            animation: slideIn 1s forwards; /* Animasi masuk */
+            transform: translateY(100%);
+            animation: slideIn 1s forwards;
         }
 
         @keyframes slideIn {
             from {
-                transform: translateY(100%); /* Mulai dari bawah */
+                transform: translateY(100%);
             }
             to {
-                transform: translateY(0); /* Bergerak ke tengah */
+                transform: translateY(0);
             }
         }
 
@@ -85,9 +94,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-size: 16px;
             color: #333;
         }
-</style>
+    </style>
+</head>
 <body>
-<div class="login-container">
+    <div class="login-container">
         <img src="assets/logo.png" alt="Bank Logo">
         <form method="post">
             <div class="input-container">
@@ -100,15 +110,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <button type="submit" value="Login" class="btn">LOGIN</button>
         </form>
-</div>
-<div class="overlay" id="overlay">
+    </div>
+
+    <div class="overlay" id="overlay">
         <div class="popup">
             <h2>Login Berhasil!</h2>
             <p>Anda akan diarahkan ke dashboard dalam 3 detik...</p>
         </div>
     </div>
-</body>
-<script>
+
+    <script>
         <?php if ($login_success): ?>
             // Tampilkan pop-up overlay
             document.getElementById('overlay').classList.add('show');
@@ -122,4 +133,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             alert('Login gagal: Username atau password salah!');
         <?php endif; ?>
     </script>
+</body>
 </html>

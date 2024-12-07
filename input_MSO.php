@@ -1,3 +1,16 @@
+<?php
+session_start(); // Memulai session
+include('koneksi.php');
+
+// Mengecek apakah pengguna sudah login
+if (!isset($_SESSION['username'])) {
+    // Jika tidak ada session username, arahkan ke halaman login
+    header("Location: login.php");
+    exit();
+}
+$nama = $_SESSION['nama'];
+$jabatan = $_SESSION['jabatan'];
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -19,13 +32,13 @@
     <aside id="sidebar" class="sidebar">
       <img src="assets/pp.png" alt="Profile Picture" />
       <div class="profile">
-        <h2>WENDI NUGRAHA N</h2>
-        <p>IT Staff</p>
+        <h2><?php echo $nama; ?></h2>
+        <p><?php echo $jabatan; ?></p>
       </div>
       <nav>
         <ul>
-          <li><a href="dashboard2.html">Dashboard</a></li>
-          <li><a href="">Memorandum SO</a></li>
+          <li><a href="dashboard.php">Dashboard</a></li>
+          <li><a href="#">Memorandum SO</a></li>
           <li><a href="#">Memorandum AO</a></li>
           <li><a href="#">Memorandum HM</a></li>
           <li><a href="#">Memorandum BM</a></li>
@@ -44,12 +57,15 @@
         <div class="form-row">
           <div class="form-group">
             <label>Sumber Aplikasi</label>
-            <input
-              type="text"
-              id="sumber-aplikasi"
-              class="form-control"
-              placeholder="Mitra Bisnis"
-            />
+            <select id="sumber-aplikasi" class="form-select">
+            <option value="" disabled selected>Sumber Aplikasi</option>
+              <option value="m-b">Mitra Bisnis</option>
+              <option value="s-m">Social Media</option>
+              <option value="t-m">Telemarketing</option>
+              <option value="r-o">Repeat Order</option>
+              <option value="b-r">Brosuring</option>
+              <option value="w-i">Walkin</option>
+            </select>
           </div>
           <div class="form-group">
             <label>Nama Sumber</label>
@@ -66,8 +82,8 @@
               type="text"
               id="nama-sales"
               class="form-control"
-              placeholder="Nama Sales Officer"
-            />
+              value="<?php echo $nama; ?>"
+            disabled/>
           </div>
         </div>
 
@@ -141,20 +157,24 @@
       <pre id="ocrResult" style="display: block"></pre>
       <form id="ktpForm">
         <div class="form-row">
+        <div class="form-group">
+            <label for="nik">NIK:</label>
+            <input type="text" id="nik" name="nik" class="form-control" />
+          </div>
+        <div class="form-group">
+            <label for="no-kk">No Kartu Keluarga:</label>
+            <input type="text" id="nik" name="nik" class="form-control" />
+          </div>
           <div class="form-group">
             <label for="name">Nama:</label>
             <input type="text" id="name" name="name" class="form-control" />
           </div>
           <div class="form-group">
-            <label for="nik">NIK:</label>
-            <input type="text" id="nik" name="nik" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label for="birthPlaceDate">Tempat Lahir:</label>
+            <label for="tempatlahir">Tempat Lahir:</label>
             <input
               type="text"
-              id="birthPlaceDate"
-              name="birthPlaceDate"
+              id="tempatlahir"
+              name="tempatlahir"
               class="form-control"
             />
           </div>
@@ -162,34 +182,34 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label for="tgl-lahir">Tanggal Lahir:</label>
+            <label for="tgllahir">Tanggal Lahir:</label>
             <input
               type="text"
-              id="tgl-lahir"
-              name="tgl-lahir"
+              id="tgllahir"
+              name="tgllahir"
               class="form-control"
             />
           </div>
 
           <div class="form-group">
-            <label for="gender">Jenis Kelamin:</label>
-            <input type="text" id="gender" name="gender" class="form-control" />
+            <label for="jeniskelamin">Jenis Kelamin:</label>
+            <input type="text" id="jeniskelamin" name="jeniskelamin" class="form-control" />
           </div>
           <div class="form-group">
-            <label for="address">Alamat:</label>
+            <label for="alamat">Alamat:</label>
             <textarea
-              id="address"
-              name="address"
+              id="alamat"
+              name="alamat"
               class="form-control"
             ></textarea>
           </div>
-        </div>
-
-        <div class="form-row">
           <div class="form-group">
             <label for="desa">Desa/Kelurahan:</label>
             <input type="text" id="desa" name="desa" class="form-control" />
           </div>
+        </div>
+
+        <div class="form-row">
           <div class="form-group">
             <label for="kecamatan">Kecamatan:</label>
             <input
@@ -208,39 +228,62 @@
               class="form-control"
             />
           </div>
+          <div class="form-group">
+            <label for="agama">Agama:</label>
+            <input
+              type="text"
+              id="agama"
+              name="agama"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label for="pekerjaan">Pekerjaan:</label>
+            <input type="text" id="pekerjaan" name="pekerjaan" class="form-control" />
+          </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label for="religion">Agama:</label>
+            <label for="statusperkawinan">Status Perkawinan:</label>
             <input
               type="text"
-              id="religion"
-              name="religion"
+              id="statusperkawinan"
+              name="statusperkawinan"
               class="form-control"
             />
           </div>
           <div class="form-group">
-            <label for="maritalStatus">Status Perkawinan:</label>
+            <label for="kewarganegaraan">Kewarganegaraan:</label>
             <input
               type="text"
-              id="maritalStatus"
-              name="maritalStatus"
+              id="kewarganegaraan"
+              name="kewarganegaraan"
               class="form-control"
             />
           </div>
           <div class="form-group">
-            <label for="job">Pekerjaan:</label>
-            <input type="text" id="job" name="job" class="form-control" />
+            <label for="nama-ibu">Nama Ibu Kandung:</label>
+            <input type="text" id="nama-ibu" name="nama-ibu" class="form-control" />
           </div>
           <div class="form-group">
-            <label for="citizenship">Kewarganegaraan:</label>
-            <input
-              type="text"
-              id="citizenship"
-              name="citizenship"
-              class="form-control"
-            />
+            <label for="no-npwp">No NPWP:</label>
+            <input type="text" id="no-npwp" name="no-npwp" class="form-control" />
+          </div>
+        </div>
+
+        <div class="form-row">
+        <div class="form-group">
+            <label for="pendidikan">Pendidikan Terakhir:</label>
+            <input type="text" id="pendidikan" name="pendidikan" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="no-hp">No Handphone:</label>
+            <input type="text" id="no-hp" name="no-hp" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="rtrw">RT/RW:</label>
+            <input type="text" id="rtrw" name="rtrw" class="form-control" />
           </div>
         </div>
 
@@ -281,11 +324,11 @@
             />
           </div>
           <div class="form-group">
-            <label for="birthPlaceDate-psg">Tempat Lahir:</label>
+            <label for="tempatlahir-psg">Tempat Lahir:</label>
             <input
               type="text"
-              id="birthPlaceDate-psg"
-              name="birthPlaceDate-psg"
+              id="tempatlahir-psg"
+              name="tempatlahir-psg"
               class="form-control"
             />
           </div>
@@ -293,29 +336,29 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label for="tgl-lahir-psg">Tanggal Lahir:</label>
+            <label for="tgllahir-psg">Tanggal Lahir:</label>
             <input
               type="text"
-              id="tgl-lahir-psg"
-              name="tgl-lahir-psg"
+              id="tgllahir-psg"
+              name="tgllahir-psg"
               class="form-control"
             />
           </div>
 
           <div class="form-group">
-            <label for="gender-psg">Jenis Kelamin:</label>
+            <label for="jeniskelamin-psg">Jenis Kelamin:</label>
             <input
               type="text"
-              id="gender-psg"
-              name="gender-psg"
+              id="jeniskelamin-psg"
+              name="jeniskelamin-psg"
               class="form-control"
             />
           </div>
           <div class="form-group">
-            <label for="address-psg">Alamat:</label>
+            <label for="alamat-psg">Alamat:</label>
             <textarea
-              id="address-psg"
-              name="address-psg"
+              id="alamat-psg"
+              name="alamat-psg"
               class="form-control"
             ></textarea>
           </div>
@@ -353,30 +396,30 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label for="religion-psg">Agama:</label>
+            <label for="agama-psg">Agama:</label>
             <input
               type="text"
-              id="religion-psg"
-              name="religion-psg"
+              id="agama-psg"
+              name="agama-psg"
               class="form-control"
             />
           </div>
 
           <div class="form-group">
-            <label for="job-psg">Pekerjaan:</label>
+            <label for="pekerjaan-psg">Pekerjaan:</label>
             <input
               type="text"
-              id="job-psg"
-              name="job-psg"
+              id="pekerjaan-psg"
+              name="pekerjaan-psg"
               class="form-control"
             />
           </div>
           <div class="form-group">
-            <label for="citizenship-psg">Kewarganegaraan:</label>
+            <label for="kewarganegaraan-psg">Kewarganegaraan:</label>
             <input
               type="text"
-              id="citizenship-psg"
-              name="citizenship-psg"
+              id="kewarganegaraan-psg"
+              name="kewarganegaraan-psg"
               class="form-control"
             />
           </div>
@@ -493,23 +536,24 @@
         // Regex untuk mencari data berdasarkan label yang umum di KTP
         const nameMatch = parsedText.match(/Nama\s*[:;]?\s*(.*)/i);
         const nikMatch = parsedText.match(/NIK\s*[:;]?\s*(\d+)/i);
-        const birthPlaceDateMatch = parsedText.match(
+        const tempatlahirMatch = parsedText.match(
           /Tempat\/Tgl Lahir\s*[:;]?\s*([A-Za-z\s]+),\s*(\d{2}-\d{2}-\d{4})/i
         );
 
-        const genderMatch = parsedText.match(
+        const jeniskelaminMatch = parsedText.match(
           /Jenis Kelamin\s*[:;]?\s*(Laki-Laki|Perempuan)/i
         );
-        const addressMatch = parsedText.match(/Alamat\s*[:;]?\s*(.*)/i);
-        const desaMatch = parsedText.match(/Kel\Desa\s*[:;]\s*(.*)/i);
+        const alamatMatch = parsedText.match(/Alamat\s*[:;]?\s*(.*)/i);
+        const rtrw = parsedText.match(/RW\s*[:;]?\s*(.*)/i);
+        const desaMatch = parsedText.match(/Desa\s*[:;]?\s*(.*)/i);
 
         const kecamatanMatch = parsedText.match(/Kecamatan\s*[:;]\s*(.*)/i);
-        const religionMatch = parsedText.match(/Agama\s*[:;]?\s*(.*)/i);
-        const maritalStatusMatch = parsedText.match(
+        const agamaMatch = parsedText.match(/Agama\s*[:;]?\s*(.*)/i);
+        const statusperkawinanMatch = parsedText.match(
           /Status Perkawinan\s*[:;]?\s*(Kawin|Belum Kawin)/i
         );
-        const jobMatch = parsedText.match(/Pekerjaan\s*[:;]?\s*([^\d]*)/i);
-        const citizenshipMatch = parsedText.match(
+        const pekerjaanMatch = parsedText.match(/Pekerjaan\s*[:;]?\s*([^\d]*)/i);
+        const kewarganegaraanMatch = parsedText.match(
           /Kewarganegaraan\s*[:;]?\s*(.*)/i
         );
 
@@ -521,18 +565,21 @@
         // Menyimpan hasil OCR ke dalam form
         document.getElementById("name").value = nameMatch ? nameMatch[1] : "";
         document.getElementById("nik").value = nikMatch ? nikMatch[1] : "";
-        if (birthPlaceDateMatch) {
-          const birthPlace = birthPlaceDateMatch[1].trim();
-          document.getElementById("birthPlaceDate").value = `${birthPlace}`;
-          const birthDate = birthPlaceDateMatch[2].trim();
-          document.getElementById("tgl-lahir").value = `${birthDate}`;
+        if (tempatlahirMatch) {
+          const birthPlace = tempatlahirMatch[1].trim();
+          document.getElementById("tempatlahir").value = `${birthPlace}`;
+          const birthDate = tempatlahirMatch[2].trim();
+          document.getElementById("tgllahir").value = `${birthDate}`;
         }
 
-        document.getElementById("gender").value = genderMatch
-          ? genderMatch[1]
+        document.getElementById("jeniskelamin").value = jeniskelaminMatch
+          ? jeniskelaminMatch[1]
           : "";
-        document.getElementById("address").value = addressMatch
-          ? addressMatch[1]
+        document.getElementById("alamat").value = alamatMatch
+          ? alamatMatch[1]
+          : "";
+        document.getElementById("rtrw").value = rtrw
+          ? rtrw[1]
           : "";
         document.getElementById("desa").value = desaMatch ? desaMatch[1] : "";
         document.getElementById("kecamatan").value = kecamatanMatch
@@ -544,15 +591,15 @@
           ? kabupatenKotaMatch[1] // Mengambil teks setelah "Kabupaten" atau "Kota"
           : "";
 
-        document.getElementById("religion").value = religionMatch
-          ? religionMatch[1]
+        document.getElementById("agama").value = agamaMatch
+          ? agamaMatch[1]
           : "";
-        document.getElementById("maritalStatus").value = maritalStatusMatch
-          ? maritalStatusMatch[1]
+        document.getElementById("statusperkawinan").value = statusperkawinanMatch
+          ? statusperkawinanMatch[1]
           : "";
-        document.getElementById("job").value = jobMatch ? jobMatch[1] : "";
-        document.getElementById("citizenship").value = citizenshipMatch
-          ? citizenshipMatch[1]
+        document.getElementById("pekerjaan").value = pekerjaanMatch ? pekerjaanMatch[1] : "";
+        document.getElementById("kewarganegaraan").value = kewarganegaraanMatch
+          ? kewarganegaraanMatch[1]
           : "";
       }
 
@@ -602,19 +649,19 @@
         // Regex untuk mencari data berdasarkan label yang umum di KTP
         const nameMatch = parsedText.match(/Nama\s*[;:]?\s*(.*)/i);
         const nikMatch = parsedText.match(/NIK\s*[:;]?\s*(\d+)/i);
-        const birthPlaceDateMatch = parsedText.match(
+        const tempatlahirMatch = parsedText.match(
           /Tempat\/Tgl Lahir\s*[:;]?\s*([A-Za-z\s]+),\s*(\d{2}-\d{2}-\d{4})/i
         );
 
-        const genderMatch = parsedText.match(
+        const jeniskelaminMatch = parsedText.match(
           /Jenis Kelamin\s*[:;]?\s*(Laki-Laki|Perempuan)/i
         );
-        const addressMatch = parsedText.match(/Alamat\s*[:;]?\s*(.*)/i);
-        const desaMatch = parsedText.match(/Kel\Desa\s*[:;]?\s*(.*)/i);
+        const alamatMatch = parsedText.match(/Alamat\s*[:;]?\s*(.*)/i);
+        const desaMatch = parsedText.match(/Desa\s*[:;]?\s*(.*)/i);
         const kecamatanMatch = parsedText.match(/Kecamatan\s*[:;]?\s*(.*)/i);
-        const religionMatch = parsedText.match(/Agama\s*[:;]?\s*(.*)/i);
-        const jobMatch = parsedText.match(/Pekerjaan\s*[:;]?\s*([^\d]*)/i);
-        const citizenshipMatch = parsedText.match(
+        const agamaMatch = parsedText.match(/Agama\s*[:;]?\s*(.*)/i);
+        const pekerjaanMatch = parsedText.match(/Pekerjaan\s*[:;]?\s*([^\d]*)/i);
+        const kewarganegaraanMatch = parsedText.match(
           /Kewarganegaraan\s*[:;]?\s*(.*)/i
         );
 
@@ -628,18 +675,18 @@
           ? nameMatch[1]
           : "";
         document.getElementById("nik-psg").value = nikMatch ? nikMatch[1] : "";
-        if (birthPlaceDateMatch) {
-          const birthPlace = birthPlaceDateMatch[1].trim();
-          document.getElementById("birthPlaceDate-psg").value = `${birthPlace}`;
-          const birthDate = birthPlaceDateMatch[2].trim();
-          document.getElementById("tgl-lahir-psg").value = `${birthDate}`;
+        if (tempatlahirMatch) {
+          const birthPlace = tempatlahirMatch[1].trim();
+          document.getElementById("tempatlahir-psg").value = `${birthPlace}`;
+          const birthDate = tempatlahirMatch[2].trim();
+          document.getElementById("tgllahir-psg").value = `${birthDate}`;
         }
 
-        document.getElementById("gender-psg").value = genderMatch
-          ? genderMatch[1]
+        document.getElementById("jeniskelamin-psg").value = jeniskelaminMatch
+          ? jeniskelaminMatch[1]
           : "";
-        document.getElementById("address-psg").value = addressMatch
-          ? addressMatch[1]
+        document.getElementById("alamat-psg").value = alamatMatch
+          ? alamatMatch[1]
           : "";
         document.getElementById("desa-psg").value = desaMatch
           ? desaMatch[1]
@@ -653,12 +700,12 @@
           ? kabupatenKotaMatch[1] // Mengambil teks setelah "Kabupaten" atau "Kota"
           : "";
 
-        document.getElementById("religion-psg").value = religionMatch
-          ? religionMatch[1]
+        document.getElementById("agama-psg").value = agamaMatch
+          ? agamaMatch[1]
           : "";
-        document.getElementById("job-psg").value = jobMatch ? jobMatch[1] : "";
-        document.getElementById("citizenship-psg").value = citizenshipMatch
-          ? citizenshipMatch[1]
+        document.getElementById("pekerjaan-psg").value = pekerjaanMatch ? pekerjaanMatch[1] : "";
+        document.getElementById("kewarganegaraan-psg").value = kewarganegaraanMatch
+          ? kewarganegaraanMatch[1]
           : "";
       }
     </script>
