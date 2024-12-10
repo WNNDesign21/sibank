@@ -154,16 +154,16 @@ $jabatan = $_SESSION['jabatan'];
         <button class="btn-primary" onclick="processOCR()">Proses OCR</button>
       </div>
       <!-- Hasil OCR -->
-      <pre id="ocrResult" style="display: block"></pre>
-      <form id="ktpForm">
+      <pre id="ocrResult" style="display: none"></pre>
+      <form id="ktpForm" method="POST" action="simpan_debitur.php">
         <div class="form-row">
         <div class="form-group">
             <label for="nik">NIK:</label>
             <input type="text" id="nik" name="nik" class="form-control" />
           </div>
         <div class="form-group">
-            <label for="no-kk">No Kartu Keluarga:</label>
-            <input type="text" id="nik" name="nik" class="form-control" />
+            <label for="no_kk">No Kartu Keluarga:</label>
+            <input type="text" id="no_kk" name="no_kk" class="form-control" />
           </div>
           <div class="form-group">
             <label for="name">Nama:</label>
@@ -204,12 +204,17 @@ $jabatan = $_SESSION['jabatan'];
             ></textarea>
           </div>
           <div class="form-group">
-            <label for="desa">Desa/Kelurahan:</label>
-            <input type="text" id="desa" name="desa" class="form-control" />
+            <label for="rtrw">RT/RW:</label>
+            <input type="text" id="rtrw" name="rtrw" class="form-control" />
           </div>
+          
         </div>
 
         <div class="form-row">
+        <div class="form-group">
+            <label for="desa">Desa/Kelurahan:</label>
+            <input type="text" id="desa" name="desa" class="form-control" />
+          </div>
           <div class="form-group">
             <label for="kecamatan">Kecamatan:</label>
             <input
@@ -237,13 +242,14 @@ $jabatan = $_SESSION['jabatan'];
               class="form-control"
             />
           </div>
-          <div class="form-group">
-            <label for="pekerjaan">Pekerjaan:</label>
-            <input type="text" id="pekerjaan" name="pekerjaan" class="form-control" />
-          </div>
+          
         </div>
 
         <div class="form-row">
+        <div class="form-group">
+            <label for="pekerjaan">Pekerjaan:</label>
+            <input type="text" id="pekerjaan" name="pekerjaan" class="form-control" />
+          </div>
           <div class="form-group">
             <label for="statusperkawinan">Status Perkawinan:</label>
             <input
@@ -263,30 +269,30 @@ $jabatan = $_SESSION['jabatan'];
             />
           </div>
           <div class="form-group">
-            <label for="nama-ibu">Nama Ibu Kandung:</label>
-            <input type="text" id="nama-ibu" name="nama-ibu" class="form-control" />
+            <label for="nama_ibu">Nama Ibu Kandung:</label>
+            <input type="text" id="nama_ibu" name="nama_ibu" class="form-control" />
           </div>
-          <div class="form-group">
-            <label for="no-npwp">No NPWP:</label>
-            <input type="text" id="no-npwp" name="no-npwp" class="form-control" />
-          </div>
+          
         </div>
 
         <div class="form-row">
+        <div class="form-group">
+            <label for="no_npwp">No NPWP:</label>
+            <input type="text" id="no_npwp" name="no_npwp" class="form-control" />
+          </div>
         <div class="form-group">
             <label for="pendidikan">Pendidikan Terakhir:</label>
             <input type="text" id="pendidikan" name="pendidikan" class="form-control" />
           </div>
           <div class="form-group">
-            <label for="no-hp">No Handphone:</label>
-            <input type="text" id="no-hp" name="no-hp" class="form-control" />
+            <label for="no_hp">No Handphone:</label>
+            <input type="text" id="no_hp" name="no_hp" class="form-control" />
           </div>
-          <div class="form-group">
-            <label for="rtrw">RT/RW:</label>
-            <input type="text" id="rtrw" name="rtrw" class="form-control" />
-          </div>
+          
         </div>
-
+        <div class="tombol">
+      <button type="submit" class="btn-primary">Save</button>
+    </div>
         <!-- Data PASANGAN PEMOHON -->
         <div class="section-title">DATA PASANGAN PEMOHOM</div>
       </form>
@@ -302,7 +308,7 @@ $jabatan = $_SESSION['jabatan'];
         </button>
       </div>
       <!-- Hasil OCR -->
-      <pre id="ocrResult-psg" style="display: block"></pre>
+      <pre id="ocrResult-psg" style="display: none"></pre>
       <form id="ktpForm">
         <div class="form-row">
           <div class="form-group">
@@ -478,7 +484,7 @@ $jabatan = $_SESSION['jabatan'];
     </div>
     <!-- Save Button -->
     <div class="tombol">
-      <button class="btn-primary">Save</button>
+      <button type="submit" class="btn-primary">Save</button>
     </div>
 
     <script>

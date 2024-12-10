@@ -291,7 +291,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css
           confirmButtonText: "OK",
         }).then((result) => {
           if (result.isConfirmed) {
-            window.location.href = "input_MSO.html";
+            window.location.href = "input_MSO.php";
           }
         });
       }
