@@ -156,6 +156,7 @@ $jabatan = $_SESSION['jabatan'];
       <!-- Hasil OCR -->
       <pre id="ocrResult" style="display: none"></pre>
       <form id="ktpForm" method="POST" action="simpan_debitur.php">
+      <form id="ktpForm">
         <div class="form-row">
         <div class="form-group">
             <label for="nik">NIK:</label>
