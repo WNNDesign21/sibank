@@ -154,7 +154,7 @@ $jabatan = $_SESSION['jabatan'];
         <button class="btn-primary" onclick="processOCR()">Proses OCR</button>
       </div>
       <!-- Hasil OCR -->
-      <pre id="ocrResult" style="display: block"></pre>
+      <pre id="ocrResult" style="display: none"></pre>
       <form id="ktpForm">
         <div class="form-row">
         <div class="form-group">

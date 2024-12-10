@@ -236,6 +236,163 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css
 
               <td>-</td>
             </tr>
+            <tr>
+              <td>1</td>
+              <td>SO-1806240001</td>
+              <td>ADHI NUR FAJAR</td>
+              <td>450,000,000</td>
+              <td>450,000,000</td>
+              <td>450,000,000</td>
+              <td>450,000,000</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>SO-1806240002</td>
+              <td>ARIE SETYA BUDIMAN</td>
+              <td>200,000,000</td>
+              <td>200,000,000</td>
+              <td>200,000,000</td>
+              <td>200,000,000</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>SO-1806240003</td>
+              <td>ADE NASIHUL UMAM</td>
+              <td>100,000,000</td>
+              <td>100,000,000</td>
+              <td>100,000,000</td>
+              <td>100,000,000</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>SO-1806240004</td>
+              <td>ROFI FEBRIAN AJI</td>
+              <td>150,000,000</td>
+              <td>150,000,000</td>
+              <td>150,000,000</td>
+              <td>150,000,000</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>SO-1806240005</td>
+              <td>RIVERIO</td>
+              <td>125,000,000</td>
+              <td>125,000,000</td>
+              <td>125,000,000</td>
+              <td>125,000,000</td>
+
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>SO-1806240001</td>
+              <td>ADHI NUR FAJAR</td>
+              <td>450,000,000</td>
+              <td>450,000,000</td>
+              <td>450,000,000</td>
+              <td>450,000,000</td>
+
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>SO-1806240002</td>
+              <td>ARIE SETYA BUDIMAN</td>
+              <td>200,000,000</td>
+              <td>200,000,000</td>
+              <td>200,000,000</td>
+              <td>200,000,000</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>SO-1806240003</td>
+              <td>ADE NASIHUL UMAM</td>
+              <td>100,000,000</td>
+              <td>100,000,000</td>
+              <td>100,000,000</td>
+              <td>100,000,000</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>SO-1806240004</td>
+              <td>ROFI FEBRIAN AJI</td>
+              <td>150,000,000</td>
+              <td>150,000,000</td>
+              <td>150,000,000</td>
+              <td>150,000,000</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>SO-1806240005</td>
+              <td>RIVERIO</td>
+              <td>125,000,000</td>
+              <td>125,000,000</td>
+              <td>125,000,000</td>
+              <td>125,000,000</td>
+
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>SO-1806240001</td>
+              <td>ADHI NUR FAJAR</td>
+              <td>450,000,000</td>
+              <td>450,000,000</td>
+              <td>450,000,000</td>
+              <td>450,000,000</td>
+
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>SO-1806240002</td>
+              <td>ARIE SETYA BUDIMAN</td>
+              <td>200,000,000</td>
+              <td>200,000,000</td>
+              <td>200,000,000</td>
+              <td>200,000,000</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>SO-1806240003</td>
+              <td>ADE NASIHUL UMAM</td>
+              <td>100,000,000</td>
+              <td>100,000,000</td>
+              <td>100,000,000</td>
+              <td>100,000,000</td>
+
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>SO-1806240004</td>
+              <td>ROFI FEBRIAN AJI</td>
+              <td>150,000,000</td>
+              <td>150,000,000</td>
+              <td>150,000,000</td>
+              <td>150,000,000</td>
+
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>SO-1806240005</td>
+              <td>RIVERIO</td>
+              <td>125,000,000</td>
+              <td>125,000,000</td>
+              <td>125,000,000</td>
+              <td>-</td>
+
+              <td>-</td>
+            </tr>
             <!-- Tambahkan baris hingga lebih dari 15 -->
           </tbody>
         </table>
@@ -291,7 +448,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css
           confirmButtonText: "OK",
         }).then((result) => {
           if (result.isConfirmed) {
-            window.location.href = "input_MSO.html";
+            window.location.href = "input_MSO.php";
           }
         });
       }

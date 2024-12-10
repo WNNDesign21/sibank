@@ -131,28 +131,23 @@ nav a {
 
 .container {
   text-align: center;
-  width: 100%;
-  padding: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-left: -4px;
+  height: calc(100vh - 70px); /* Tinggi penuh layar dikurangi tinggi header */
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 /* INI CSS TABLE CAA */
 .table-container {
-  margin: 0px 70px 0px 70px; /* Margin bawah diperbesar */
-  width: 90%;
-  overflow: auto; /* Scrollable ke samping dan bawah */
-  max-height: 400px; /* Maksimum tinggi tabel */
-  border: 1px solid #ddd;
-  -webkit-overflow-scrolling: touch;
+  flex: 1; /* Tabel memenuhi ruang di antara header dan tombol */
+  overflow-y: auto; /* Supaya tabel bisa di-scroll jika konten panjang */
+  margin: 0 55px 10px 55px; /* Margin kiri dan kanan sebesar 50px, margin bawah 10px */
 }
 
 table {
-  border-collapse: collapse;
   width: 100%;
-  min-width: 1000px; /* Tabel lebar minimum */
+  border-collapse: collapse;
 }
 
 th,
@@ -180,23 +175,24 @@ tbody tr:nth-child(even) {
 .tombol {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-bottom: 30px;
 }
 
 .add-new-btn {
+  align-self: center; /* Posisikan tombol di tengah horizontal */
   padding: 10px 20px;
   background-color: #800000;
   color: white;
   font-size: 16px;
   border: none;
-  border-radius: 50px; /* Membuat tombol membulat */
+  border-radius: 50px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s, box-shadow 0.3s ease-in-out;
   cursor: pointer;
 }
 
 .add-new-btn:hover {
-  background-color: #800000;
+  background-color: #a00000;
   box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
 }
 
