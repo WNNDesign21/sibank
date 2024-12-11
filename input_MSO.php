@@ -17,7 +17,7 @@ $jabatan = $_SESSION['jabatan'];
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
-    <link rel="stylesheet" href="input_MSO.css" />
+    <link rel="stylesheet" href="css/input_MSO.css" />
   </head>
   <body>
     <header>
@@ -294,9 +294,9 @@ $jabatan = $_SESSION['jabatan'];
         <div class="tombol">
       <button type="submit" class="btn-primary">Save</button>
     </div>
+    </form>
         <!-- Data PASANGAN PEMOHON -->
-        <div class="section-title">DATA PASANGAN PEMOHOM</div>
-      </form>
+        <div class="section-title">DATA PASANGAN PEMOHOM</div>    
       <div class="ocr">
         <input
           type="file"
