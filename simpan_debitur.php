@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nama = $_POST['name'];
     $tempat_lahir = $_POST['tempatlahir'];
     $tanggal_lahir = $_POST['tgllahir'];
+    $tanggal_lahir_db = DateTime::createFromFormat('d-m-Y', $tanggal_lahir)->format('Y-m-d');
     $jenis_kelamin = $_POST['jeniskelamin'];
     $alamat = $_POST['alamat'];
     $rtrw = $_POST['rtrw'];
@@ -24,12 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $sql = "INSERT INTO debitur 
         (nik, no_kk, nama, tempat_lahir, tanggal_lahir, jenis_kelamin, alamat, rtrw, desa, kecamatan, kota, agama, pekerjaan, status_perkawinan, kewarganegaraan, nama_ibu, no_npwp, pendidikan, no_hp) 
-        VALUES ('$nik', '$no_kk', '$nama', '$tempat_lahir', '$tanggal_lahir', '$jenis_kelamin', '$alamat', '$rtrw', '$desa', '$kecamatan', '$kabupatenKota', '$agama', '$pekerjaan', '$status_perkawinan', '$kewarganegaraan', '$nama_ibu', '$no_npwp', '$pendidikan', '$no_hp')";
+        VALUES ('$nik', '$no_kk', '$nama', '$tempat_lahir', '$tanggal_lahir_db', '$jenis_kelamin', '$alamat', '$rtrw', '$desa', '$kecamatan', '$kabupatenKota', '$agama', '$pekerjaan', '$status_perkawinan', '$kewarganegaraan', '$nama_ibu', '$no_npwp', '$pendidikan', '$no_hp')";
 
     if ($conn->query($sql) === TRUE) {
         echo "<script>
         alert('Data berhasil disimpan!');
-        window.location.href = 'dash_mso.php';
+        window.location.href = '';
     </script>";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
