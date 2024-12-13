@@ -23,15 +23,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $pendidikan = $_POST['pendidikan'];
     $no_hp = $_POST['no_hp'];
 
-    $sql = "INSERT INTO debitur 
+    // Data pasangan
+    $nik_psg = $_POST['nik-psg'];
+    $name_psg = $_POST['name-psg'];
+    $tempatlahir_psg = $_POST['tempatlahir-psg'];
+    $tgllahir_psg = $_POST['tgllahir-psg'];  // Format Tanggal
+    $tgllahir_psg_db = DateTime::createFromFormat('d-m-Y', $tgllahir_psg)->format('Y-m-d');
+    $jeniskelamin_psg = $_POST['jeniskelamin-psg'];
+    $alamat_psg = $_POST['alamat-psg'];
+    $rtrw_psg = $_POST['rtrw-psg'];
+    $desa_psg = $_POST['desa-psg'];
+    $kecamatan_psg = $_POST['kecamatan-psg'];
+    $kabupatenKota_psg = $_POST['kabupatenKota-psg'];
+    $agama_psg = $_POST['agama-psg'];
+    $pekerjaan_psg = $_POST['pekerjaan-psg'];
+
+    $sql_debitur = "INSERT INTO debitur 
         (nik, no_kk, nama, tempat_lahir, tanggal_lahir, jenis_kelamin, alamat, rtrw, desa, kecamatan, kota, agama, pekerjaan, status_perkawinan, kewarganegaraan, nama_ibu, no_npwp, pendidikan, no_hp) 
         VALUES ('$nik', '$no_kk', '$nama', '$tempat_lahir', '$tanggal_lahir_db', '$jenis_kelamin', '$alamat', '$rtrw', '$desa', '$kecamatan', '$kabupatenKota', '$agama', '$pekerjaan', '$status_perkawinan', '$kewarganegaraan', '$nama_ibu', '$no_npwp', '$pendidikan', '$no_hp')";
 
-    if ($conn->query($sql) === TRUE) {
+    if ($conn->query($sql_debitur) === TRUE) {
         echo "<script>
         alert('Data berhasil disimpan!');
         window.location.href = '';
     </script>";
+        $query = "INSERT INTO pasangan 
+            (nik, nama, tempat-lahir, tgllahir, jeniskelamin, alamat, rtrw, desa, kecamatan, kabupatenKota, agama, pekerjaan) 
+            VALUES ('$nik_psg', '$name_psg', '$tempatlahir_psg', '$tgllahir_psg', '$jeniskelamin_psg', '$alamat_psg', '$rtrw_psg', '$desa_psg', '$kecamatan_psg', '$kabupatenKota_psg', '$agama_psg', '$pekerjaan_psg')";
+
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
