@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 20, 2024 at 12:53 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Waktu pembuatan: 13 Des 2024 pada 15.36
+-- Versi server: 10.4.24-MariaDB
+-- Versi PHP: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,39 +24,49 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `debitur`
+-- Struktur dari tabel `debitur`
 --
 
 CREATE TABLE `debitur` (
   `nik` bigint(16) NOT NULL,
-  `nama` varchar(50) NOT NULL,
   `no_kk` bigint(16) NOT NULL,
-  `no_npwp` bigint(16) NOT NULL,
-  `gelar` int(2) NOT NULL,
-  `tempat_lahir` varchar(15) NOT NULL,
+  `nama` varchar(50) NOT NULL,
+  `tempat_lahir` varchar(25) NOT NULL,
   `tanggal_lahir` date NOT NULL,
+  `jenis_kelamin` varchar(15) NOT NULL,
+  `alamat` varchar(50) NOT NULL,
+  `rtrw` int(7) NOT NULL,
+  `desa` varchar(25) NOT NULL,
+  `kecamatan` varchar(25) NOT NULL,
+  `kota` varchar(25) NOT NULL,
+  `agama` varchar(10) NOT NULL,
+  `pekerjaan` varchar(15) NOT NULL,
+  `status_perkawinan` varchar(15) NOT NULL,
+  `kewarganegaraan` varchar(3) NOT NULL,
   `nama_ibu` varchar(50) NOT NULL,
-  `pendidikan` int(1) NOT NULL,
-  `agama` int(1) NOT NULL,
-  `jenis_kelamin` enum('L','P') NOT NULL,
-  `status` int(1) NOT NULL,
-  `tanggungan` int(2) NOT NULL,
-  `alamat_debt` int(5) NOT NULL,
-  `alamat_domisili` int(5) NOT NULL,
-  `no_hp` int(13) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `no_npwp` bigint(16) NOT NULL,
+  `pendidikan` varchar(25) NOT NULL,
+  `no_hp` bigint(16) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `debitur`
+-- Dumping data untuk tabel `debitur`
 --
 
-INSERT INTO `debitur` (`nik`, `nama`, `no_kk`, `no_npwp`, `gelar`, `tempat_lahir`, `tanggal_lahir`, `nama_ibu`, `pendidikan`, `agama`, `jenis_kelamin`, `status`, `tanggungan`, `alamat_debt`, `alamat_domisili`, `no_hp`) VALUES
-(3215052112960002, 'Wendi Nugraha N', 3215052112960022, 3215052112960000, 1, 'Karawang', '2024-10-02', 'Ela Hayati', 1, 1, 'L', 1, 1, 1, 1, 1234567891);
+INSERT INTO `debitur` (`nik`, `no_kk`, `nama`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `rtrw`, `desa`, `kecamatan`, `kota`, `agama`, `pekerjaan`, `status_perkawinan`, `kewarganegaraan`, `nama_ibu`, `no_npwp`, `pendidikan`, `no_hp`) VALUES
+(3471140209790001, 0, 'RIYANTO. SE	', 'GROBOGAN', '1979-09-02', 'LAKI-LAKI', 'PRM PURI DOMAS D-3, SEMPU	', 1, 'WEDOMARTANI	', 'NGEMPLAK	', 'SLEMAN	', 'ISLAM	', 'PEDAGANG	', 'KAWIN', 'WNI', '', 0, '', 0),
+(3471140209790002, 0, 'RIYANTO. SE	', 'GROBOGAN', '1979-09-02', 'LAKI-LAKI', 'PRM PURI DOMAS D-3, SEMPU	', 1, 'WEDOMARTANI	', 'NGEMPLAK	', 'SLEMAN	', 'ISLAM	', 'PEDAGANG	', 'KAWIN', 'WNI', '', 0, '', 0),
+(3471140209790003, 0, 'RIYANTO. SE	', 'GROBOGAN', '1979-09-02', 'LAKI-LAKI', 'PRM PURI DOMAS D-3, SEMPU	', 1, 'WEDOMARTANI	', 'NGEMPLAK	', 'SLEMAN	', 'ISLAM	', 'PEDAGANG	', 'KAWIN', 'WNI', '', 0, '', 0),
+(3471140209790004, 0, 'RIYANTO. SE	', 'GROBOGAN', '1979-09-02', 'LAKI-LAKI', 'PRM PURI DOMAS D-3, SEMPU	', 1, 'WEDOMARTANI	', 'NGEMPLAK	', 'SLEMAN	', 'ISLAM	', 'PEDAGANG	', 'KAWIN', 'WNI', '', 0, '', 0),
+(3471140209790005, 0, 'RIYANTO. SE	', 'GROBOGAN', '1979-09-02', 'LAKI-LAKI', 'PRM PURI DOMAS D-3, SEMPU	', 1, 'WEDOMARTANI	', 'NGEMPLAK	', 'SLEMAN	', 'ISLAM	', 'PEDAGANG	', 'KAWIN', 'WNI', '', 0, '', 0),
+(3471140209790006, 0, 'RIYANTO. SE	', 'GROBOGAN', '1979-09-02', 'LAKI-LAKI', 'PRM PURI DOMAS D-3, SEMPU	', 1, 'WEDOMARTANI	', 'NGEMPLAK	', 'SLEMAN	', 'ISLAM	', 'PEDAGANG	', 'KAWIN', 'WNI', '', 0, '', 0),
+(3471140209790007, 0, 'RIYANTO. SE	', 'GROBOGAN', '1979-09-02', 'LAKI-LAKI', 'PRM PURI DOMAS D-3, SEMPU	', 1, 'WEDOMARTANI	', 'NGEMPLAK	', 'SLEMAN	', 'ISLAM	', 'PEDAGANG	', 'KAWIN', 'WNI', '', 0, '', 0),
+(3471140209790008, 0, 'RIYANTO. SE	', 'GROBOGAN', '1979-09-02', 'LAKI-LAKI', 'PRM PURI DOMAS D-3, SEMPU	', 1, 'WEDOMARTANI	', 'NGEMPLAK	', 'SLEMAN	', 'ISLAM	', 'PEDAGANG	', 'KAWIN', 'WNI', '', 0, '', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `loans`
+-- Struktur dari tabel `loans`
 --
 
 CREATE TABLE `loans` (
@@ -64,10 +74,10 @@ CREATE TABLE `loans` (
   `nama_cust` varchar(50) NOT NULL,
   `pinjaman` float NOT NULL,
   `tanggal` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `loans`
+-- Dumping data untuk tabel `loans`
 --
 
 INSERT INTO `loans` (`id`, `nama_cust`, `pinjaman`, `tanggal`) VALUES
@@ -80,7 +90,7 @@ INSERT INTO `loans` (`id`, `nama_cust`, `pinjaman`, `tanggal`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pas_debt`
+-- Struktur dari tabel `pas_debt`
 --
 
 CREATE TABLE `pas_debt` (
@@ -89,10 +99,10 @@ CREATE TABLE `pas_debt` (
   `tempat_lahir` varchar(15) NOT NULL,
   `tanggal_lahir` date NOT NULL,
   `alamat` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `pas_debt`
+-- Dumping data untuk tabel `pas_debt`
 --
 
 INSERT INTO `pas_debt` (`nik_pas`, `nama`, `tempat_lahir`, `tanggal_lahir`, `alamat`) VALUES
@@ -101,7 +111,7 @@ INSERT INTO `pas_debt` (`nik_pas`, `nama`, `tempat_lahir`, `tanggal_lahir`, `ala
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pinjaman`
+-- Struktur dari tabel `pinjaman`
 --
 
 CREATE TABLE `pinjaman` (
@@ -117,10 +127,10 @@ CREATE TABLE `pinjaman` (
   `deskripsi` varchar(255) NOT NULL,
   `debitur` bigint(16) NOT NULL,
   `pasangan` bigint(16) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `pinjaman`
+-- Dumping data untuk tabel `pinjaman`
 --
 
 INSERT INTO `pinjaman` (`id_pinjaman`, `sumber`, `nama_sumber`, `nama_sales`, `pinajam`, `tenor`, `tujuan`, `produk`, `pot`, `deskripsi`, `debitur`, `pasangan`) VALUES
@@ -129,38 +139,38 @@ INSERT INTO `pinjaman` (`id_pinjaman`, `sumber`, `nama_sumber`, `nama_sales`, `p
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pot`
+-- Struktur dari tabel `pot`
 --
 
 CREATE TABLE `pot` (
   `id_pot` int(2) NOT NULL,
   `keterangan` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `produk`
+-- Struktur dari tabel `produk`
 --
 
 CREATE TABLE `produk` (
   `id_produk` int(2) NOT NULL,
   `keterangan` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sumber`
+-- Struktur dari tabel `sumber`
 --
 
 CREATE TABLE `sumber` (
   `id_sumber` int(2) NOT NULL,
   `keterangan` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `sumber`
+-- Dumping data untuk tabel `sumber`
 --
 
 INSERT INTO `sumber` (`id_sumber`, `keterangan`) VALUES
@@ -170,57 +180,59 @@ INSERT INTO `sumber` (`id_sumber`, `keterangan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tujuan_pinjaman`
+-- Struktur dari tabel `tujuan_pinjaman`
 --
 
 CREATE TABLE `tujuan_pinjaman` (
   `id_tujuan` int(1) NOT NULL,
   `keterangan` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
   `username` int(6) NOT NULL,
   `nama` varchar(50) NOT NULL,
-  `password` varchar(8) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `password` varchar(8) NOT NULL,
+  `jabatan` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `users`
+-- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `users` (`username`, `nama`, `password`) VALUES
-(211296, 'Wendi Nugraha N', '123@abc');
+INSERT INTO `users` (`username`, `nama`, `password`, `jabatan`) VALUES
+(123456, 'Tangguh Colay', '@12345', 'MANAGER'),
+(211296, 'Wendi Nugraha N', '123@abc', 'IT STAFF');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `debitur`
+-- Indeks untuk tabel `debitur`
 --
 ALTER TABLE `debitur`
   ADD PRIMARY KEY (`nik`);
 
 --
--- Indexes for table `loans`
+-- Indeks untuk tabel `loans`
 --
 ALTER TABLE `loans`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pas_debt`
+-- Indeks untuk tabel `pas_debt`
 --
 ALTER TABLE `pas_debt`
   ADD PRIMARY KEY (`nik_pas`);
 
 --
--- Indexes for table `pinjaman`
+-- Indeks untuk tabel `pinjaman`
 --
 ALTER TABLE `pinjaman`
   ADD PRIMARY KEY (`id_pinjaman`),
@@ -228,55 +240,44 @@ ALTER TABLE `pinjaman`
   ADD KEY `pasangan` (`pasangan`);
 
 --
--- Indexes for table `pot`
+-- Indeks untuk tabel `pot`
 --
 ALTER TABLE `pot`
   ADD PRIMARY KEY (`id_pot`);
 
 --
--- Indexes for table `produk`
+-- Indeks untuk tabel `produk`
 --
 ALTER TABLE `produk`
   ADD PRIMARY KEY (`id_produk`);
 
 --
--- Indexes for table `sumber`
+-- Indeks untuk tabel `sumber`
 --
 ALTER TABLE `sumber`
   ADD PRIMARY KEY (`id_sumber`);
 
 --
--- Indexes for table `tujuan_pinjaman`
+-- Indeks untuk tabel `tujuan_pinjaman`
 --
 ALTER TABLE `tujuan_pinjaman`
   ADD PRIMARY KEY (`id_tujuan`);
 
 --
--- Indexes for table `users`
+-- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`username`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `loans`
+-- AUTO_INCREMENT untuk tabel `loans`
 --
 ALTER TABLE `loans`
   MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `pinjaman`
---
-ALTER TABLE `pinjaman`
-  ADD CONSTRAINT `debitur` FOREIGN KEY (`debitur`) REFERENCES `debitur` (`nik`),
-  ADD CONSTRAINT `pasangan` FOREIGN KEY (`pasangan`) REFERENCES `pas_debt` (`nik_pas`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

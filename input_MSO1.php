@@ -252,81 +252,79 @@ if (isset($_GET['id'])) {
             </div>
 
             <!-- Data PASANGAN PEMOHON -->
-            <div class="data-pasangan-container hidden">
-                <div class="section-title">DATA PASANGAN PEMOHOM</div>
-                <div class="ocr">
-                    <input type="file" id="ktpImage-psg" accept="image/*" class="form-control" />
-                    <button type="button" class="btn-primary" onclick="processOCRpsg()">
-                        Proses OCR
-                    </button>
+            <div class="section-title">DATA PASANGAN PEMOHOM</div>
+            <div class="ocr">
+                <input type="file" id="ktpImage-psg" accept="image/*" class="form-control" />
+                <button type="button" class="btn-primary" onclick="processOCRpsg()">
+                    Proses OCR
+                </button>
+            </div>
+            <!-- Hasil OCR -->
+            <pre id="ocrResult-psg" style="display: none"></pre>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nik-psg">NIK:</label>
+                    <input type="text" id="nik-psg" name="nik-psg" class="form-control" disabled />
                 </div>
-                <!-- Hasil OCR -->
-                <pre id="ocrResult-psg" style="display: none"></pre>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="nik-psg">NIK:</label>
-                        <input type="text" id="nik-psg" name="nik-psg" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label for="name-psg">Nama:</label>
-                        <input type="text" id="name-psg" name="name-psg" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label for="tempatlahir-psg">Tempat Lahir:</label>
-                        <input type="text" id="tempatlahir-psg" name="tempatlahir-psg" class="form-control" />
-                    </div>
+                <div class="form-group">
+                    <label for="name-psg">Nama:</label>
+                    <input type="text" id="name-psg" name="name-psg" class="form-control" disabled />
                 </div>
+                <div class="form-group">
+                    <label for="tempatlahir-psg">Tempat Lahir:</label>
+                    <input type="text" id="tempatlahir-psg" name="tempatlahir-psg" class="form-control" disabled />
+                </div>
+            </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="tgllahir-psg">Tanggal Lahir:</label>
-                        <input type="text" id="tgllahir-psg" name="tgllahir-psg" class="form-control" />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="jeniskelamin-psg">Jenis Kelamin:</label>
-                        <input type="text" id="jeniskelamin-psg" name="jeniskelamin-psg" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label for="alamat-psg">Alamat:</label>
-                        <textarea id="alamat-psg" name="alamat-psg" class="form-control"></textarea>
-                    </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="tgllahir-psg">Tanggal Lahir:</label>
+                    <input type="text" id="tgllahir-psg" name="tgllahir-psg" class="form-control" disabled />
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="rtrw-psg">RT/RW:</label>
-                        <input type="text" id="rtrw-psg" name="rtrw-psg" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label for="desa-psg">Desa/Kelurahan:</label>
-                        <input type="text" id="desa-psg" name="desa-psg" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label for="kecamatan-psg">Kecamatan:</label>
-                        <input type="text" id="kecamatan-psg" name="kecamatan-psg" class="form-control" />
-                    </div>
+                <div class="form-group">
+                    <label for="jeniskelamin-psg">Jenis Kelamin:</label>
+                    <input type="text" id="jeniskelamin-psg" name="jeniskelamin-psg" class="form-control" disabled />
+                </div>
+                <div class="form-group">
+                    <label for="alamat-psg">Alamat:</label>
+                    <textarea id="alamat-psg" name="alamat-psg" class="form-control" disabled></textarea>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="rtrw-psg">RT/RW:</label>
+                    <input type="text" id="rtrw-psg" name="rtrw-psg" class="form-control" disabled />
+                </div>
+                <div class="form-group">
+                    <label for="desa-psg">Desa/Kelurahan:</label>
+                    <input type="text" id="desa-psg" name="desa-psg" class="form-control" disabled />
+                </div>
+                <div class="form-group">
+                    <label for="kecamatan-psg">Kecamatan:</label>
+                    <input type="text" id="kecamatan-psg" name="kecamatan-psg" class="form-control" disabled />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="kabupatenKota-psg">Kabupaten/Kota:</label>
+                    <input type="text" id="kabupatenKota-psg" name="kabupatenKota-psg" class="form-control" disabled />
+                </div>
+                <div class="form-group">
+                    <label for="agama-psg">Agama:</label>
+                    <input type="text" id="agama-psg" name="agama-psg" class="form-control" disabled />
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="kabupatenKota-psg">Kabupaten/Kota:</label>
-                        <input type="text" id="kabupatenKota-psg" name="kabupatenKota-psg" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label for="agama-psg">Agama:</label>
-                        <input type="text" id="agama-psg" name="agama-psg" class="form-control" />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="pekerjaan-psg">Pekerjaan:</label>
-                        <input type="text" id="pekerjaan-psg" name="pekerjaan-psg" class="form-control" />
-                    </div>
-                    <!-- <div class="form-group">
+                <div class="form-group">
+                    <label for="pekerjaan-psg">Pekerjaan:</label>
+                    <input type="text" id="pekerjaan-psg" name="pekerjaan-psg" class="form-control" disabled />
+                </div>
+                <!-- <div class="form-group">
                     <label for="kewarganegaraan-psg">Kewarganegaraan:</label>
                     <input type="text" id="kewarganegaraan-psg" name="kewarganegaraan-psg" class="form-control" />
                 </div> -->
-                </div>
             </div>
             <div class="tombol">
                 <button type="submit" class="btn-primary">Save</button>
@@ -606,39 +604,45 @@ if (isset($_GET['id'])) {
 
             // Ambil elemen form
             const form = document.getElementById('ktpForm');
+
+            // Buat objek FormData untuk mengumpulkan data
             const formData = new FormData(form);
 
-            // Kirim data dengan Fetch API
+            // Kirim data dengan fetch API
             fetch('simpan_debitur.php', {
                 method: 'POST',
                 body: formData
             })
-                .then(response => response.json()) // Parsing JSON
+                .then(response => response.text()) // Ubah response ke teks
                 .then(data => {
-                    if (data.status === 'success') {
-                        alert(data.message);
-                        window.location.href = 'mso.php'; // Redirect jika sukses
+                    // Cek respons dari server
+                    if (data.includes("Data berhasil disimpan")) {
+                        alert("Data tersimpan di database!");
                     } else {
-                        alert(data.message); // Tampilkan pesan error
+                        alert("Gagal menyimpan data, NIK Sudah Terdaftar" + data);
                     }
                 })
                 .catch(error => {
-                    alert('Terjadi kesalahan: ' + error.message);
+                    // Tangani jika terjadi error
+                    alert("Terjadi kesalahan: " + error);
                 });
-        }
 
+            return false; // Mencegah pengiriman form lebih lanjut
+        }
 
         function togglePasanganForm() {
             const statusPerkawinan = document.getElementById("statusperkawinan").value.toLowerCase();
-            const pasanganContainer = document.querySelector(".data-pasangan-container");
+            const pasanganFields = document.querySelectorAll('#nik-psg, #name-psg, #tempatlahir-psg, #tgllahir-psg, #jeniskelamin-psg, #alamat-psg, #rtrw-psg, #desa-psg, #kecamatan-psg, #kabupatenKota-psg, #agama-psg, #pekerjaan-psg');
 
             if (statusPerkawinan === "kawin") {
-                pasanganContainer.classList.remove("hidden"); // Tampilkan form pasangan
+                pasanganFields.forEach(field => field.removeAttribute('disabled'));
             } else {
-                pasanganContainer.classList.add("hidden"); // Sembunyikan form pasangan
+                pasanganFields.forEach(field => {
+                    field.setAttribute('disabled', true);
+                    field.value = ""; // Kosongkan nilai form
+                });
             }
         }
-
         window.onload = () => {
             togglePasanganForm();
         };
