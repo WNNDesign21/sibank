@@ -65,6 +65,7 @@ header img {
   display: flex;
   flex-direction: column;
   z-index: 10;
+  align-items: center;
 }
 
 .sidebar-open {
@@ -72,10 +73,10 @@ header img {
 }
 .sidebar img {
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: auto;
+  height: 150px;
   object-fit: cover;
-  margin: 20px 0px 0px 20px;
+  margin: 20px 0px 0px 0px;
 }
 
 .hamburger-open {
@@ -89,17 +90,20 @@ header img {
 }
 
 .profile {
-  text-align: left;
+  text-align: center;
   padding: 20px;
 }
 
 .profile img {
+  display: block;
+  justify-items: center;
+  align-items: center;
   border-radius: 50%;
 }
 
-.profile h2 {
+.profile h1 {
   margin: 10px 0 5px;
-  font-size: medium;
+  font-size: large;
 }
 
 nav ul {
@@ -253,4 +257,59 @@ tbody tr:nth-child(even) {
 
 .upload-btn:focus {
   outline: none;
+}
+.btn-primary {
+  padding: 10px 20px;
+  background-color: #800000;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 50px;
+  /* Membuat tombol membulat */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+
+/* Styling untuk tombol */
+a {
+  text-decoration: none; /* Menghilangkan garis bawah */
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 5px;
+  transition: all 0.3s ease; /* Transisi efek saat hover */
+}
+
+/* Tombol Edit */
+.btn-edit {
+  background-color: #4CAF50; /* Hijau */
+  color: white;
+}
+.btn-edit:hover {
+  background-color: #45a049; /* Hijau lebih gelap saat hover */
+}
+
+/* Tombol Lihat */
+.btn-view {
+  background-color: #2196F3; /* Biru */
+  color: white;
+}
+.btn-view:hover {
+  background-color: #1976d2; /* Biru lebih gelap saat hover */
+}
+
+/* Tombol Hapus */
+.btn-delete {
+  background-color: #f44336; /* Merah */
+  color: white;
+}
+.btn-delete:hover {
+  background-color: #e53935; /* Merah lebih gelap saat hover */
+}
+
+/* Menambahkan jarak antara link (opsional) */
+td a {
+  margin-right: 0px;
+  display: block;
 }

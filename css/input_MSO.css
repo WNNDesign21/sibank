@@ -67,6 +67,7 @@ header img {
     display: flex;
     flex-direction: column;
     z-index: 10;
+    align-items: center;
 }
 
 .sidebar-open {
@@ -76,10 +77,10 @@ header img {
 
 .sidebar img {
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: auto;
+    height: 120px;
     object-fit: cover;
-    margin: 20px 0px 0px 20px;
+    margin: 20px 0px 0px 0px;
 }
 
 .hamburger-open {
@@ -93,7 +94,7 @@ header img {
 }
 
 .profile {
-    text-align: left;
+    text-align: center;
     padding: 20px;
 }
 

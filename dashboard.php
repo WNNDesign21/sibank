@@ -18,6 +18,8 @@ $jabatan = $_SESSION['jabatan'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
     <link rel="stylesheet" href="dashboard2.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css" rel="stylesheet"/>
   </head>
   <body>
     <header>
@@ -37,8 +39,8 @@ $jabatan = $_SESSION['jabatan'];
       </div>
       <nav>
         <ul>
-          <li><a href="#">Dashboard</a></li>
-          <li><a href="Dash_MSO.php">Memorandum SO</a></li>
+          <li><a href="dashboard.php">Dashboard</a></li>
+          <li><a href="mso.php">Memorandum SO</a></li>
           <li><a href="#">Memorandum AO</a></li>
           <li><a href="#">Memorandum HM</a></li>
           <li><a href="#">Memorandum BM</a></li>
@@ -46,9 +48,11 @@ $jabatan = $_SESSION['jabatan'];
           <li><a href="CAA.html">CAA</a></li>
         </ul>
       </nav>
-      <form action="logout.php" method="post">
-    <button type="submit" class="logout">Logout</button>    
-  </form>
+      <div class="tombol">
+            <form action="logout.php" method="POST">
+                <button type="submit" class="btn-primary">Logout</button>
+            </form>
+        </div>
     </aside>
 
     <div class="container">

@@ -124,3 +124,16 @@ th {
 .wrapper-open {
     margin-left: 250px;
 }
+
+.btn-primary {
+    padding: 10px 20px;
+    background-color: #800000;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 50px;
+    /* Membuat tombol membulat */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+}

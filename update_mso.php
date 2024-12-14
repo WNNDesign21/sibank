@@ -10,6 +10,32 @@ if (!isset($_SESSION['username'])) {
 }
 $nama = $_SESSION['nama'];
 $jabatan = $_SESSION['jabatan'];
+
+// proses ambil data untuk edit
+if (isset($_GET['nik'])) {
+    $nik = $_GET['nik'];
+
+    // Query untuk mengambil data debitur berdasarkan ID
+    $query = "SELECT * FROM debitur WHERE nik = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $nik);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $dataDebitur = $result->fetch_assoc();
+
+    // Query untuk mengambil data pasangan (jika ada)
+    $nik_pasangan=$dataDebitur['nik_pasangan'];
+    $queryPasangan = "SELECT * FROM pasangan WHERE nik = ?";
+    $stmtPasangan = $conn->prepare($queryPasangan);
+    $stmtPasangan->bind_param("i", $nik_pasangan);
+    $stmtPasangan->execute();
+    $resultPasangan = $stmtPasangan->get_result();
+    $dataPasangan = $resultPasangan->fetch_assoc();
+} else {
+    // Jika tidak ada ID, asumsikan halaman untuk input baru
+    $dataDebitur = null;
+    $dataPasangan = null;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +66,7 @@ $jabatan = $_SESSION['jabatan'];
         <nav>
             <ul>
                 <li><a href="dashboard.php">Dashboard</a></li>
-                <li><a href="#">Memorandum SO</a></li>
+                <li><a href="mso.php">Memorandum SO</a></li>
                 <li><a href="#">Memorandum AO</a></li>
                 <li><a href="#">Memorandum HM</a></li>
                 <li><a href="#">Memorandum BM</a></li>
@@ -48,7 +74,10 @@ $jabatan = $_SESSION['jabatan'];
                 <li><a href="CAA.html">CAA</a></li>
             </ul>
         </nav>
-        <button class="logout">Logout</button>
+        <form action="logout.php" method="POST">
+    <button type="submit" class="logout">Logout</button>
+</form>
+
     </aside>
 
     <div class="container">
@@ -127,39 +156,46 @@ $jabatan = $_SESSION['jabatan'];
             <div class="form-row">
                 <div class="form-group">
                     <label for="nik">NIK:</label>
-                    <input type="text" id="nik" name="nik" class="form-control" />
+                    <input type="text" id="nik" name="nik" class="form-control" 
+                    value="<?php echo isset($dataDebitur['nama']) ? $dataDebitur['nama'] : ''; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="no_kk">No Kartu Keluarga:</label>
-                    <input type="text" id="no_kk" name="no_kk" class="form-control" />
+                    <input type="text" id="no_kk" name="no_kk" class="form-control"
+                    value="<?php echo isset($dataDebitur['no_kk']) ? $dataDebitur['no_kk'] : ''; ?>" />
                 </div>
                 <div class="form-group">
                     <label for="name">Nama:</label>
-                    <input type="text" id="name" name="name" class="form-control" />
+                    <input type="text" id="name" name="name" class="form-control"
+                    value="<?php echo isset($dataDebitur['nik']) ? $dataDebitur['nik'] : ''; ?>" />
                 </div>
                 <div class="form-group">
                     <label for="tempatlahir">Tempat Lahir:</label>
-                    <input type="text" id="tempatlahir" name="tempatlahir" class="form-control" />
+                    <input type="text" id="tempatlahir" name="tempatlahir" class="form-control" 
+                    value="<?php echo isset($dataDebitur['tempat_lahir']) ? $dataDebitur['tempat_lahir'] : ''; ?>"/>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label for="tgllahir">Tanggal Lahir:</label>
-                    <input type="text" id="tgllahir" name="tgllahir" class="form-control" />
+                    <input type="text" id="tgllahir" name="tgllahir" class="form-control" 
+                    value="<?php echo isset($dataDebitur['tanggal_lahir']) ? $dataDebitur['tanggal_lahir'] : ''; ?>"/>
                 </div>
 
                 <div class="form-group">
                     <label for="jeniskelamin">Jenis Kelamin:</label>
-                    <input type="text" id="jeniskelamin" name="jeniskelamin" class="form-control" />
+                    <input type="text" id="jeniskelamin" name="jeniskelamin" class="form-control" 
+                    value="<?php echo isset($dataDebitur['jenis_kelamin']) ? $dataDebitur['jenis_kelamin'] : ''; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="alamat">Alamat:</label>
-                    <textarea id="alamat" name="alamat" class="form-control"></textarea>
+                    <textarea id="alamat" name="alamat" class="form-control"><?php echo isset($dataDebitur['alamat']) ? $dataDebitur['alamat'] : ''; ?>"</textarea>
                 </div>
                 <div class="form-group">
                     <label for="rtrw">RT/RW:</label>
-                    <input type="text" id="rtrw" name="rtrw" class="form-control" />
+                    <input type="text" id="rtrw" name="rtrw" class="form-control" 
+                    value="<?php echo isset($dataDebitur['rtrw']) ? $dataDebitur['rtrw'] : ''; ?>"/>
                 </div>
 
             </div>
@@ -167,19 +203,23 @@ $jabatan = $_SESSION['jabatan'];
             <div class="form-row">
                 <div class="form-group">
                     <label for="desa">Desa/Kelurahan:</label>
-                    <input type="text" id="desa" name="desa" class="form-control" />
+                    <input type="text" id="desa" name="desa" class="form-control" 
+                    value="<?php echo isset($dataDebitur['desa']) ? $dataDebitur['desa'] : ''; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="kecamatan">Kecamatan:</label>
-                    <input type="text" id="kecamatan" name="kecamatan" class="form-control" />
+                    <input type="text" id="kecamatan" name="kecamatan" class="form-control" 
+                    value="<?php echo isset($dataDebitur['kecamatan']) ? $dataDebitur['kecamatan'] : ''; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="kabupatenKota">Kabupaten/Kota:</label>
-                    <input type="text" id="kabupatenKota" name="kabupatenKota" class="form-control" />
+                    <input type="text" id="kabupatenKota" name="kabupatenKota" class="form-control" 
+                    value="<?php echo isset($dataDebitur['kota']) ? $dataDebitur['kota'] : ''; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="agama">Agama:</label>
-                    <input type="text" id="agama" name="agama" class="form-control" />
+                    <input type="text" id="agama" name="agama" class="form-control" 
+                    value="<?php echo isset($dataDebitur['agama']) ? $dataDebitur['agama'] : ''; ?>"/>
                 </div>
 
             </div>
@@ -187,19 +227,23 @@ $jabatan = $_SESSION['jabatan'];
             <div class="form-row">
                 <div class="form-group">
                     <label for="pekerjaan">Pekerjaan:</label>
-                    <input type="text" id="pekerjaan" name="pekerjaan" class="form-control" />
+                    <input type="text" id="pekerjaan" name="pekerjaan" class="form-control" 
+                    value="<?php echo isset($dataDebitur['pekerjaan']) ? $dataDebitur['pekerjaan'] : ''; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="statusperkawinan">Status Perkawinan:</label>
-                    <input type="text" id="statusperkawinan" name="statusperkawinan" class="form-control" />
+                    <input type="text" id="statusperkawinan" name="statusperkawinan" class="form-control" 
+                    value="<?php echo isset($dataDebitur['status_perkawinan']) ? $dataDebitur['status_perkawinan'] : ''; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="kewarganegaraan">Kewarganegaraan:</label>
-                    <input type="text" id="kewarganegaraan" name="kewarganegaraan" class="form-control" />
+                    <input type="text" id="kewarganegaraan" name="kewarganegaraan" class="form-control" 
+                    value="<?php echo isset($dataDebitur['kewarganegaraan']) ? $dataDebitur['kewarganegaraan'] : ''; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="nama_ibu">Nama Ibu Kandung:</label>
-                    <input type="text" id="nama_ibu" name="nama_ibu" class="form-control" />
+                    <input type="text" id="nama_ibu" name="nama_ibu" class="form-control" 
+                    value="<?php echo isset($dataDebitur['nama_ibu']) ? $dataDebitur['nama_ibu'] : ''; ?>"/>
                 </div>
 
             </div>
@@ -207,15 +251,18 @@ $jabatan = $_SESSION['jabatan'];
             <div class="form-row">
                 <div class="form-group">
                     <label for="no_npwp">No NPWP:</label>
-                    <input type="text" id="no_npwp" name="no_npwp" class="form-control" />
+                    <input type="text" id="no_npwp" name="no_npwp" class="form-control" 
+                    value="<?php echo isset($dataDebitur['no_npwp']) ? $dataDebitur['no_npwp'] : ''; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="pendidikan">Pendidikan Terakhir:</label>
-                    <input type="text" id="pendidikan" name="pendidikan" class="form-control" />
+                    <input type="text" id="pendidikan" name="pendidikan" class="form-control" 
+                    value="<?php echo isset($dataDebitur['pendidikan']) ? $dataDebitur['pendidikan'] : ''; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="no_hp">No Handphone:</label>
-                    <input type="text" id="no_hp" name="no_hp" class="form-control" />
+                    <input type="text" id="no_hp" name="no_hp" class="form-control" 
+                    value="<?php echo isset($dataDebitur['no_hp']) ? $dataDebitur['no_hp'] : ''; ?>"/>
                 </div>
 
             </div>
@@ -233,62 +280,73 @@ $jabatan = $_SESSION['jabatan'];
             <div class="form-row">
                 <div class="form-group">
                     <label for="nik-psg">NIK:</label>
-                    <input type="text" id="nik-psg" name="nik-psg" class="form-control" />
+                    <input type="text" id="nik-psg" name="nik-psg" class="form-control" 
+                    value="<?php echo isset($dataPasangan['nik']) ? $dataPasangan['nik'] : ''; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="name-psg">Nama:</label>
-                    <input type="text" id="name-psg" name="name-psg" class="form-control" />
+                    <input type="text" id="name-psg" name="name-psg" class="form-control" 
+                    value="<?php echo isset($dataPasangan['nama']) ? $dataPasangan['nama'] : ''; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="tempatlahir-psg">Tempat Lahir:</label>
-                    <input type="text" id="tempatlahir-psg" name="tempatlahir-psg" class="form-control" />
+                    <input type="text" id="tempatlahir-psg" name="tempatlahir-psg" class="form-control" 
+                    value="<?php echo isset($dataPasangan['tempat_lahir']) ? $dataPasangan['tempat_lahir'] : ''; ?>"/>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label for="tgllahir-psg">Tanggal Lahir:</label>
-                    <input type="text" id="tgllahir-psg" name="tgllahir-psg" class="form-control" />
+                    <input type="text" id="tgllahir-psg" name="tgllahir-psg" class="form-control" 
+                    value="<?php echo isset($dataPasangan['tgllahir']) ? $dataPasangan['tgllahir'] : ''; ?>"/>
                 </div>
 
                 <div class="form-group">
                     <label for="jeniskelamin-psg">Jenis Kelamin:</label>
-                    <input type="text" id="jeniskelamin-psg" name="jeniskelamin-psg" class="form-control" />
+                    <input type="text" id="jeniskelamin-psg" name="jeniskelamin-psg" class="form-control" 
+                    value="<?php echo isset($dataPasangan['jeniskelamin']) ? $dataPasangan['jeniskelamin'] : ''; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="alamat-psg">Alamat:</label>
-                    <textarea id="alamat-psg" name="alamat-psg" class="form-control"></textarea>
+                    <textarea id="alamat-psg" name="alamat-psg" class="form-control"><?php echo isset($dataPasangan['alamat']) ? $dataPasangan['alamat'] : ''; ?>"</textarea>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label for="rtrw-psg">RT/RW:</label>
-                    <input type="text" id="rtrw-psg" name="rtrw-psg" class="form-control" />
+                    <input type="text" id="rtrw-psg" name="rtrw-psg" class="form-control" 
+                    value="<?php echo isset($dataPasangan['rtrw']) ? $dataPasangan['rtrw'] : ''; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="desa-psg">Desa/Kelurahan:</label>
-                    <input type="text" id="desa-psg" name="desa-psg" class="form-control" />
+                    <input type="text" id="desa-psg" name="desa-psg" class="form-control" 
+                    value="<?php echo isset($dataPasangan['desa']) ? $dataPasangan['desa'] : ''; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="kecamatan-psg">Kecamatan:</label>
-                    <input type="text" id="kecamatan-psg" name="kecamatan-psg" class="form-control" />
+                    <input type="text" id="kecamatan-psg" name="kecamatan-psg" class="form-control" 
+                    value="<?php echo isset($dataPasangan['kecamatan']) ? $dataPasangan['kecamatan'] : ''; ?>"/>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label for="kabupatenKota-psg">Kabupaten/Kota:</label>
-                    <input type="text" id="kabupatenKota-psg" name="kabupatenKota-psg" class="form-control" />
+                    <input type="text" id="kabupatenKota-psg" name="kabupatenKota-psg" class="form-control" 
+                    value="<?php echo isset($dataPasangan['kabupatenKota']) ? $dataPasangan['kabupatenKota'] : ''; ?>"/>
                 </div>
                 <div class="form-group">
                     <label for="agama-psg">Agama:</label>
-                    <input type="text" id="agama-psg" name="agama-psg" class="form-control" />
+                    <input type="text" id="agama-psg" name="agama-psg" class="form-control" 
+                    value="<?php echo isset($dataPasangan['agama']) ? $dataPasangan['agama'] : ''; ?>"/>
                 </div>
 
                 <div class="form-group">
                     <label for="pekerjaan-psg">Pekerjaan:</label>
-                    <input type="text" id="pekerjaan-psg" name="pekerjaan-psg" class="form-control" />
+                    <input type="text" id="pekerjaan-psg" name="pekerjaan-psg" class="form-control" 
+                    value="<?php echo isset($dataPasangan['pekerjaan']) ? $dataPasangan['pekerjaan'] : ''; ?>"/>
                 </div>
                 <!-- <div class="form-group">
                     <label for="kewarganegaraan-psg">Kewarganegaraan:</label>
