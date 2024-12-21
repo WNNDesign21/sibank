@@ -88,35 +88,35 @@ if (isset($_GET['id'])) {
             <div class="form-row">
                 <div class="form-group">
                     <label>Sumber Aplikasi</label>
-                    <select id="sumber-aplikasi" class="form-select">
+                    <select id="sumber_aplikasi" name="sumber_aplikasi" class="form-select">
                         <option value="" disabled selected>Sumber Aplikasi</option>
-                        <option value="m-b">Mitra Bisnis</option>
-                        <option value="s-m">Social Media</option>
-                        <option value="t-m">Telemarketing</option>
-                        <option value="r-o">Repeat Order</option>
-                        <option value="b-r">Brosuring</option>
-                        <option value="w-i">Walkin</option>
+                        <option value="Mitra Bisnis">Mitra Bisnis</option>
+                        <option value="Social Media">Social Media</option>
+                        <option value="Telemarketing`">Telemarketing</option>
+                        <option value="Repeat Order">Repeat Order</option>
+                        <option value="Brosuring">Brosuring</option>
+                        <option value="Walk In">Walkin</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Nama Sumber</label>
-                    <input type="text" id="nama-sumber" class="form-control" placeholder="Nama Mitra Bisnis" />
+                    <input type="text" id="nama_sumber" name="nama_sumber" class="form-control" placeholder="Nama Mitra Bisnis" />
                 </div>
                 <div class="form-group">
                     <label>Nama Sales Officer</label>
-                    <input type="text" id="nama-sales" class="form-control" value="<?php echo $nama; ?>" disabled />
+                    <input type="text" id="nama_sales" name="nama_sales" class="form-control" value="<?php echo $nama; ?>" readonly />
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label>Pengajuan</label>
-                    <input type="text" id="pengajuan" class="form-control" placeholder="Nominal Pengajuan"
+                    <input type="text" id="pinjaman" name="pinjaman" class="form-control" placeholder="Nominal Pengajuan"
                         oninput="formatNumber(this)" />
                 </div>
                 <div class="form-group">
                     <label>Tenor</label>
-                    <select id="tenor" class="form-select">
+                    <select id="tenor" name="tenor" class="form-select">
                         <option value="6">6 Bulan</option>
                         <option value="12">12 Bulan</option>
                         <option value="24">24 Bulan</option>
@@ -127,7 +127,7 @@ if (isset($_GET['id'])) {
                 </div>
                 <div class="form-group">
                     <label>Tujuan Pinjaman</label>
-                    <select id="tujuan" class="form-select">
+                    <select id="tujuan" name="tujuan" class="form-select">
                         <option value="Konsumtif">Konsumtif</option>
                         <option value="Investasi">Investasi</option>
                         <option value="Liburan">Liburan</option>
@@ -139,11 +139,14 @@ if (isset($_GET['id'])) {
             <div class="form-row">
                 <div class="form-group">
                     <label>Produk</label>
-                    <input type="text" id="produk" class="form-control" placeholder="Kredit Agunan Sertifikat" />
+                    <select id="produk" name="produk" class="form-select">
+                        <option value="SHM">SHM</option>
+                        <option value="SHGB">SHGB</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label>Deskripsi</label>
-                    <input type="text" id="deskripsi" class="form-control" placeholder="Kredit Spesial Karyawan" />
+                    <input type="text" id="deskripsi" name="deskripsi" class="form-control" placeholder="Kredit Spesial Karyawan" />
                 </div>
             </div>
             <!-- Data PEMOHON Section -->
@@ -439,7 +442,7 @@ if (isset($_GET['id'])) {
             const statusperkawinanMatch = parsedText.match(
                 /Status Perkawinan\s*[:;]?\s*(Kawin|Belum Kawin)/i
             );
-            const pekerjaanMatch = parsedText.match(/Pekerjaan\s*[:;]?\s*([^\d]pelajar|mahasiswa|karyawan swasta|pegawai negeri sipil|PNS|wiraswasta)/i);
+            const pekerjaanMatch = parsedText.match(/Pekerjaan\s*[:;]?\s*([^\d]pelajar|mahasiswa|karyawan swasta|pegawai negeri sipil|PNS|wiraswasta|pedagang|pegawai swasta)/i);
             const kewarganegaraanMatch = parsedText.match(
                 /Kewarganegaraan\s*[:;]?\s*(WNI|WNA)/i
             );
@@ -604,27 +607,31 @@ if (isset($_GET['id'])) {
         function submitForm(event) {
             event.preventDefault(); // Mencegah pengiriman form secara default
 
-            // Ambil elemen form
             const form = document.getElementById('ktpForm');
             const formData = new FormData(form);
 
-            // Kirim data dengan Fetch API
             fetch('simpan_debitur.php', {
                 method: 'POST',
                 body: formData
             })
-                .then(response => response.json()) // Parsing JSON
-                .then(data => {
-                    if (data.status === 'success') {
-                        alert(data.message);
-                        window.location.href = 'mso.php'; // Redirect jika sukses
-                    } else {
-                        alert(data.message); // Tampilkan pesan error
-                    }
-                })
-                .catch(error => {
-                    alert('Terjadi kesalahan: ' + error.message);
-                });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === 'success') {
+                    alert(data.message);
+                    window.location.href = 'mso.php'; // Redirect jika sukses
+                } else {
+                    alert(data.message); // Tampilkan pesan error
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan: ' + error.message);
+            });
         }
 
 
@@ -642,6 +649,17 @@ if (isset($_GET['id'])) {
         window.onload = () => {
             togglePasanganForm();
         };
+
+    function formatNumber(input) {
+        // Ambil nilai dari input dan hapus semua karakter non-digit
+        let value = input.value.replace(/[^0-9]/g, '');
+
+        // Format angka dengan pemisah ribuan
+        let formattedValue = new Intl.NumberFormat('id-ID').format(value);
+
+        // Set nilai yang diformat kembali ke input
+        input.value = formattedValue;
+    }
     </script>
 </body>
 

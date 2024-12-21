@@ -27,9 +27,13 @@ $sql = "SELECT
             debitur.no_hp AS no_hp_debitur, 
             pasangan.nama AS nama_pasangan, 
             pasangan.tempat_lahir AS tempat_lahir_pasangan, 
-            pasangan.tgllahir AS tanggal_lahir_pasangan
+            pasangan.tgllahir AS tanggal_lahir_pasangan, 
+            pinjaman.id_pinjaman AS id_pinjaman, 
+            pinjaman.tanggal_input AS tanggal_input
         FROM debitur
-        LEFT JOIN pasangan ON debitur.nik_pasangan = pasangan.nik";
+        LEFT JOIN pasangan ON debitur.nik_pasangan = pasangan.nik
+        LEFT JOIN pinjaman ON debitur.nik = pinjaman.nik";
+
 
 $result = $conn->query($sql);
 ?>
@@ -86,15 +90,16 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css
 
     <div class="container">
       <h1>MEMORANDUM SALES OFFICER</h1>
-      <div class="table-container">
-         <!-- Tombol Add New -->
       <div class="tombol">
         <button class="add-new-btn" onclick="Lanjut()">Add New</button>
       </div>
+      <div class="table-container">
         <table border="1">
             <thead>
                 <tr>
                   <th>No</th>
+                    <th>Id Pinjaman</th>
+                    <th>Tanggal Pengajuan</th>
                     <th>Nama Debitur</th>
                     <th>Tempat Lahir Debitur</th>
                     <th>Tanggal Lahir Debitur</th>
@@ -114,6 +119,8 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css
                     while($row = $result->fetch_assoc()) {
                         echo "<tr>";
                         echo "<td>" . $no++ . "</td>";
+                        echo "<td>" . $row['id_pinjaman'] . "</td>";
+                        echo "<td>" . $row['tanggal_input'] . "</td>";
                         echo "<td>" . $row['nama_debitur'] . "</td>";
                         echo "<td>" . $row['tempat_lahir_debitur'] . "</td>";
                         echo "<td>" . $row['tanggal_lahir_debitur'] . "</td>";

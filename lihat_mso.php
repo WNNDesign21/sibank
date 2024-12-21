@@ -31,10 +31,19 @@ if (isset($_GET['nik'])) {
     $stmtPasangan->execute();
     $resultPasangan = $stmtPasangan->get_result();
     $dataPasangan = $resultPasangan->fetch_assoc();
+
+    $nik_deb=$dataDebitur['nik'];
+    $querypin = "SELECT * FROM pinjaman WHERE nik = ?";
+    $stmtpin = $conn->prepare($querypin);
+    $stmtpin->bind_param("i", $nik_deb);
+    $stmtpin->execute();
+    $resultpin = $stmtpin->get_result();
+    $datapin = $resultpin->fetch_assoc();
 } else {
     // Jika tidak ada ID, asumsikan halaman untuk input baru
     $dataDebitur = null;
     $dataPasangan = null;
+    $datapin = null;
 }
 ?>
 <!DOCTYPE html>
@@ -90,23 +99,15 @@ if (isset($_GET['nik'])) {
             <div class="form-row">
                 <div class="form-group">
                     <label>Sumber Aplikasi</label>
-                    <select id="sumber-aplikasi" class="form-select">
-                        <option value="" disabled selected>Sumber Aplikasi</option>
-                        <option value="m-b">Mitra Bisnis</option>
-                        <option value="s-m">Social Media</option>
-                        <option value="t-m">Telemarketing</option>
-                        <option value="r-o">Repeat Order</option>
-                        <option value="b-r">Brosuring</option>
-                        <option value="w-i">Walkin</option>
-                    </select>
+                    <input type="text" id="sumber_aplikasi" name="sumber_aplikasi" class="form-control" value="<?php echo isset($datapin['sumber']) ? $datapin['sumber'] : ''; ?>" disabled>
                 </div>
                 <div class="form-group">
                     <label>Nama Sumber</label>
-                    <input type="text" id="nama-sumber" class="form-control" placeholder="Nama Mitra Bisnis" />
+                    <input type="text" id="nama-sumber" class="form-control" placeholder="Nama Mitra Bisnis" value="<?php echo isset($datapin['nama_sumber']) ? $datapin['nama_sumber'] : ''; ?>" disabled />
                 </div>
                 <div class="form-group">
                     <label>Nama Sales Officer</label>
-                    <input type="text" id="nama-sales" class="form-control" value="<?php echo $nama; ?>" disabled />
+                    <input type="text" id="nama-sales" class="form-control" value="<?php echo isset($datapin['nama_sales']) ? $datapin['nama_sales'] : ''; ?>" disabled />
                 </div>
             </div>
 
@@ -114,22 +115,15 @@ if (isset($_GET['nik'])) {
                 <div class="form-group">
                     <label>Pengajuan</label>
                     <input type="text" id="pengajuan" class="form-control" placeholder="Nominal Pengajuan"
-                        oninput="formatNumber(this)" />
+                        oninput="formatNumber(this)" value="<?php echo isset($datapin['pinjaman']) ? $datapin['pinjaman'] : ''; ?>" disabled />
                 </div>
                 <div class="form-group">
                     <label>Tenor</label>
-                    <select id="tenor" class="form-select">
-                        <option value="6">6 Bulan</option>
-                        <option value="12">12 Bulan</option>
-                        <option value="24">24 Bulan</option>
-                        <option value="36">36 Bulan</option>
-                        <option value="48">48 Bulan</option>
-                        <option value="60">60 Bulan</option>
-                    </select>
+                    <input type="text" id="tenor" name="tenor" class="form-control" value="<?php echo isset($datapin['tenor']) ? $datapin['tenor'] : ''; ?>" disabled />
                 </div>
                 <div class="form-group">
                     <label>Tujuan Pinjaman</label>
-                    <select id="tujuan" class="form-select">
+                    <select id="tujuan" class="form-select" value="<?php echo isset($datapin['tujuan']) ? $datapin['tujuan'] : ''; ?>" disabled>
                         <option value="Konsumtif">Konsumtif</option>
                         <option value="Investasi">Investasi</option>
                         <option value="Liburan">Liburan</option>
@@ -141,11 +135,11 @@ if (isset($_GET['nik'])) {
             <div class="form-row">
                 <div class="form-group">
                     <label>Produk</label>
-                    <input type="text" id="produk" class="form-control" placeholder="Kredit Agunan Sertifikat" />
+                    <input type="text" id="produk" class="form-control" value="<?php echo isset($datapin['produk']) ? $datapin['produk'] : ''; ?>" disabled />
                 </div>
                 <div class="form-group">
                     <label>Deskripsi</label>
-                    <input type="text" id="deskripsi" class="form-control" placeholder="Kredit Spesial Karyawan" />
+                    <input type="text" id="deskripsi" class="form-control" value="<?php echo isset($datapin['deskripsi']) ? $datapin['deskripsi'] : ''; ?>" disabled />
                 </div>
             </div>
             <!-- Data PEMOHON Section -->

@@ -29,6 +29,12 @@ if (isset($_GET['nik'])) {
             $stmt_hapus_pasangan->execute();
         }
 
+        // Hapus data pinjaman berdasarkan nik_debitur
+        $sql_hapus_pinjaman = "DELETE FROM pinjaman WHERE nik = ?";
+        $stmt_hapus_pinjaman = $conn->prepare($sql_hapus_pinjaman);
+        $stmt_hapus_pinjaman->bind_param('s', $nik_debitur);
+        $stmt_hapus_pinjaman->execute();
+
         // Hapus data debitur berdasarkan nik_debitur
         $sql_hapus_debitur = "DELETE FROM debitur WHERE nik = ?";
         $stmt_hapus_debitur = $conn->prepare($sql_hapus_debitur);
@@ -41,7 +47,7 @@ if (isset($_GET['nik'])) {
         // Redirect ke halaman dashboard setelah berhasil
         echo "<script>
                 alert('Data berhasil dihapus!');
-                window.location.href = 'dashboard.php'; // Ganti dengan halaman yang sesuai
+                window.location.href = 'mso.php'; // Ganti dengan halaman yang sesuai
               </script>";
 
     } catch (Exception $e) {
@@ -54,7 +60,7 @@ if (isset($_GET['nik'])) {
     // Jika tidak ada nik di URL
     echo "<script>
             alert('Nik tidak ditemukan!');
-            window.location.href = 'dashboard.php'; // Ganti dengan halaman yang sesuai
+            window.location.href = 'mso.php'; // Ganti dengan halaman yang sesuai
           </script>";
 }
 
